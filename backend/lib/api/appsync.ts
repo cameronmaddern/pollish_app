@@ -6,6 +6,7 @@ import {
   AmplifyGraphqlApi,
   AmplifyGraphqlDefinition,
 } from "@aws-amplify/graphql-api-construct";
+import { Duration } from "aws-cdk-lib";
 
 type AmplifyGraphQLAPIProps = {
   appName: string;
@@ -33,6 +34,11 @@ export const createAmplifyGraphQLAPI = (
         identityPoolId: props.identityPoolId,
         unauthenticatedUserRole: props.unauthRole,
         authenticatedUserRole: props.authRole,
+      },
+      apiKeyConfig: {
+        // Configure the API key
+        description: "Public API Key",
+        expires: Duration.days(365), // Number of days before the API key expires
       },
     },
   });

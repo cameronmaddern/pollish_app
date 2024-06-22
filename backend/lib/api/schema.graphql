@@ -1,5 +1,7 @@
 # This is an example poll model, it is missing many fields
-type Poll @model {
+type Poll
+  @model
+  @auth(rules: [{ allow: public, provider: apiKey, operations: [read] }]) {
   id: ID!
   title: String!
 }

@@ -1,6 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
+import { Amplify } from "aws-amplify";
+import amplifyConfig from "./amplify_config";
+
+Amplify.configure(amplifyConfig);
+
 export default function App() {
   return (
     <View style={styles.container}>
