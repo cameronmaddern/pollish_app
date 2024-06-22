@@ -1,25 +1,17 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-
+import { NavigationContainer } from "@react-navigation/native";
 import { Amplify } from "aws-amplify";
 import amplifyConfig from "./amplify_config";
+import Tabs from "./src/navigation/tabs";
+import { ThemeProvider } from "./src/contexts/theme_context";
 
 Amplify.configure(amplifyConfig);
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider>
+      <NavigationContainer>
+        <Tabs />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
