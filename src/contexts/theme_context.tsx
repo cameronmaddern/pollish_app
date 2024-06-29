@@ -82,6 +82,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       fontFamily: "SFProRounded-Bold",
       fontSize: 16,
     },
+    displaySmall: {
+      fontFamily: "SFProRounded-Regular",
+      fontSize: 36,
+    },
   };
 
   return (

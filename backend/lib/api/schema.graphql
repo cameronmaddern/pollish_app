@@ -1,4 +1,44 @@
-# This is an example poll model, it is missing many fields
+# TODO: Auth rules are setup for testing purposes only
+type TextOption
+  @model
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey, operations: [read, create, update] }
+    ]
+  ) {
+  id: ID!
+  text: String!
+  poll: String!
+}
+
+# TODO: Auth rules are setup for testing purposes only
+type TextPoll
+  @model
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey, operations: [read, create, update] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  image: String!
+}
+
+# TODO: Auth rules are setup for testing purposes only
+type Vote
+  @model
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey, operations: [read, create, update] }
+    ]
+  ) {
+  id: ID!
+  option: String!
+  owner: String!
+  poll: String!
+}
+
+# TODO: This is an example poll model, it is missing many fields
 type Poll
   @model
   @auth(rules: [{ allow: public, provider: apiKey, operations: [read] }]) {

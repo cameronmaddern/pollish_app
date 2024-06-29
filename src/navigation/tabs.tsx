@@ -65,7 +65,11 @@ export default function Tabs() {
         tabBarInactiveTintColor: colors.textMuted,
         tabBarActiveTintColor: colors.primary,
         headerShown: false,
-        tabBarStyle: styles.tabBarStyle,
+        tabBarStyle: {
+          ...styles.tabBarStyle,
+          borderColor: colors.background,
+          borderTopColor: colors.background,
+        },
       })}
     >
       <Tab.Screen name={Constants.HOME_TAB} component={HomeScreen} />
@@ -97,7 +101,8 @@ const styles = StyleSheet.create({
   tabBarStyle: {
     position: "absolute",
     borderRadius: 20,
-    borderTopWidth: 0,
+    borderWidth: 1,
+    borderTopWidth: 1,
     paddingLeft: 10,
     paddingRight: 10,
   },

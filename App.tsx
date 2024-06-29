@@ -12,6 +12,9 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     "SFProRounded-Medium": require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
     "SFProRounded-Bold": require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
+    "SFProRounded-Regular": require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
+    "SFProRounded-Semibold": require("./assets/fonts/SF-Pro-Rounded-Semibold.otf"),
+    "Nunito-Bold": require("./assets/fonts/Nunito-Bold.ttf"),
   });
 
   //TODO: Implement a nicer loading indicator

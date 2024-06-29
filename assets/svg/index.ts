@@ -6,3 +6,4 @@ export { TagsIcon } from "./tags_icon";
 export { MoreIcon } from "./more_icon";
 export { TimerIcon } from "./timer_icon";
 export { ChatIcon } from "./chat_icon";
+export { NotificationIcon } from "./notification_icon";
