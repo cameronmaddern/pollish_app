@@ -1,1 +1,2 @@
-export { PollOption } from "./poll_option";
+export { PollTextOption } from "./poll_text_option";
+export { PollSharedScaffold } from "./poll_shared_scaffold";

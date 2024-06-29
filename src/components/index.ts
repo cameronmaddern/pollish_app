@@ -1,1 +1,1 @@
-export { Poll } from "./poll/poll";
+export { TextPoll } from "./poll/text_poll";

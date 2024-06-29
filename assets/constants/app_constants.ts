@@ -7,3 +7,6 @@ export const TAGS_TAB = "Tags";
 export const PROFILE_TAB = "Profile";
 
 export const CHAT = "Chat";
+
+export const APP_NAME_P1 = "poll";
+export const APP_NAME_P2 = "ish";

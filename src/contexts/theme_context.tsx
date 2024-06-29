@@ -13,6 +13,15 @@ interface Colors {
   contrastMedium: string;
 }
 
+interface TextStyles {
+  titleLarge: any;
+  titleMedium: any;
+  titleSmall: any;
+  bodyLarge: any;
+  bodyMedium: any;
+  bodySmall: any;
+}
+
 interface ThemeContextType {
   textStyles: any;
   colors: Colors;
@@ -85,6 +94,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     displaySmall: {
       fontFamily: "SFProRounded-Regular",
       fontSize: 36,
+    },
+    appName: {
+      fontFamily: "Nunito-Bold",
+      fontSize: 28,
     },
   };
 

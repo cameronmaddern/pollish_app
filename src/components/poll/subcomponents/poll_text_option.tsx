@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   Animated,
   TouchableOpacity,
@@ -7,32 +7,28 @@ import {
   Text,
 } from "react-native";
 import { useTheme } from "../../../contexts/theme_context";
-import { PollOptionState } from "../entities";
+import { PollOptionState, TextOptionData } from "../entities";
 
 interface PollOptionProps {
+  data: TextOptionData;
   number: string;
-  title: string;
   state: PollOptionState;
-  percentageOfVote: number;
-  optionSelected: string;
-  setOptionSelected: (option: string) => void;
+  updateOption: (option: string) => void;
 }
 
-export function PollOption({
+export function PollTextOption({
+  data,
   number,
-  title,
   state,
-  percentageOfVote,
-  optionSelected,
-  setOptionSelected,
+  updateOption,
 }: PollOptionProps) {
   const { textStyles, colors } = useTheme();
 
   const fillAnim = useRef(new Animated.Value(0)).current;
-  const [percentage, setPercentage] = useState(0);
+  const percentageOfVote = (data.numberOfVotes / data.totalVotes) * 100;
 
-  const handlePress = () => {
-    setOptionSelected(title);
+  const handlePress = async () => {
+    updateOption(data.id);
   };
 
   useEffect(() => {
@@ -42,16 +38,7 @@ export function PollOption({
       duration: 500,
       useNativeDriver: false,
     }).start();
-  }, [optionSelected]);
-
-  useEffect(() => {
-    const listener = fillAnim.addListener(({ value }) => {
-      setPercentage(Math.round(value));
-    });
-    return () => {
-      fillAnim.removeListener(listener);
-    };
-  }, [fillAnim]);
+  }, [state]);
 
   const fillWidth = fillAnim.interpolate({
     inputRange: [0, 100],
@@ -129,7 +116,7 @@ export function PollOption({
             color: textColor,
           }}
         >
-          {title}
+          {data.title}
         </Text>
         <View style={{ flex: 1 }} />
         <Text
@@ -138,7 +125,7 @@ export function PollOption({
             color: percentageColor,
           }}
         >
-          {percentage}%
+          {percentageOfVote}%
         </Text>
         <View style={{ width: 12 }} />
       </View>
