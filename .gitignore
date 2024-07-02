@@ -4,3 +4,4 @@ node_modules
 schema.graphql
 src/graphql/
 appsync_config.txt
+API.ts
