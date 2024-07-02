@@ -1,14 +1,13 @@
-import { TextOptionData } from "./text_option_data";
+import { ImageOptionData } from "./image_option_data";
 
-export type TextPollData = {
+export type ImagePollData = {
   id: string;
   title: string;
-  image: string;
   username: string;
   profileImage: string;
   totalVotes: number;
   //TODO: This should be a datetime
   timeRemaining: string;
-  options: TextOptionData[];
+  options: ImageOptionData[];
   createdAt: string;
 };

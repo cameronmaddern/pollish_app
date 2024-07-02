@@ -11,15 +11,11 @@ interface Colors {
   contrastHighest: string;
   contrastHigh: string;
   contrastMedium: string;
-}
-
-interface TextStyles {
-  titleLarge: any;
-  titleMedium: any;
-  titleSmall: any;
-  bodyLarge: any;
-  bodyMedium: any;
-  bodySmall: any;
+  contrastHighMediumTransparency: string;
+  contrastLowLowTransparency: string;
+  contrastLowMediumTransparency: string;
+  contrastMediumMediumTransparency: string;
+  contrastMediumLowTransparency: string;
 }
 
 interface ThemeContextType {
@@ -57,6 +53,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     contrastHighest: "#000000",
     contrastHigh: "#373737",
     contrastMedium: "#666666",
+    contrastHighMediumTransparency: "rgba(0,0,0,0.6)",
+    contrastLowLowTransparency: "rgba(255, 255, 255, 0.8)",
+    contrastLowMediumTransparency: "rgba(255, 255, 255, 0.6)",
+    contrastMediumMediumTransparency: "rgba(139,139,139,0.5)",
+    contrastMediumLowTransparency: "rgba(139,139,139,0.8)",
   };
 
   const darkColors: Colors = {
@@ -70,6 +71,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     contrastHighest: "#FFFFFF",
     contrastHigh: "#FFFFFF",
     contrastMedium: "#9E9E9E",
+    contrastHighMediumTransparency: "rgba(255, 255, 255, 0.6)",
+    contrastLowLowTransparency: "rgba(13,13,13,0.8)",
+    contrastLowMediumTransparency: "rgba(13,13,13,0.6)",
+    contrastMediumMediumTransparency: "rgba(139,139,139,0.5)",
+    contrastMediumLowTransparency: "rgba(139,139,139,0.8)",
   };
 
   const toggleColorScheme = (): void => {
@@ -89,6 +95,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     },
     labelLargeProminent: {
       fontFamily: "SFProRounded-Bold",
+      fontSize: 16,
+    },
+    headerSmall: {
+      fontFamily: "SFProRounded-Semibold",
       fontSize: 16,
     },
     displaySmall: {

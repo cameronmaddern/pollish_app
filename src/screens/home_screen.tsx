@@ -1,4 +1,4 @@
-import { TextPoll } from "../components";
+import { TextPoll, ImagePoll } from "../components";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
@@ -7,7 +7,7 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { NotificationIcon } from "../../assets/svg";
 import { useEffect, useState } from "react";
 import { HomeProvider, useHome } from "../contexts/home_context";
-import { TextPollData } from "../components/poll/entities";
+import { ImagePollData, TextPollData } from "../components/poll/entities";
 import * as constants from "../../assets/constants/app_constants";
 
 export function HomeScreen() {
@@ -22,7 +22,7 @@ export function HomeScreenInternal() {
   const { colors, textStyles } = useTheme();
   const insets = useSafeAreaInsets();
   const tabBarHeight = useBottomTabBarHeight();
-  const [polls, setPolls] = useState<TextPollData[]>([]);
+  const [polls, setPolls] = useState<(TextPollData | ImagePollData)[]>([]);
   const { findPolls } = useHome();
 
   const locatePolls = async () => {
@@ -58,17 +58,24 @@ export function HomeScreenInternal() {
       <ScrollView>
         <View style={{ height: 9 }} />
         {polls.length > 0 &&
-          polls.map((poll, index) => (
-            <View key={index}>
-              <TextPoll pollData={poll} />
-              <View style={{ height: 9 }} />
-            </View>
-          ))}
+          polls.map((poll, index) =>
+            //TODO: come up with a better way of determining if it's a text or image poll
+            "image" in poll ? (
+              <View key={index}>
+                <TextPoll pollData={poll as TextPollData} />
+                <View style={{ height: 9 }} />
+              </View>
+            ) : (
+              <View key={index}>
+                <ImagePoll pollData={poll as ImagePollData} />
+                <View style={{ height: 9 }} />
+              </View>
+            )
+          )}
         <View style={{ height: 10 }} />
       </ScrollView>
       <View
         style={{
-          ...styles.genericContainer,
           height: tabBarHeight - 10,
         }}
       />

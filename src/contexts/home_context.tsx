@@ -1,10 +1,10 @@
 import { generateClient } from "aws-amplify/api";
 import { ReactNode, createContext, useContext } from "react";
-import { TextPollData } from "../components/poll/entities";
+import { ImagePollData, TextPollData } from "../components/poll/entities";
 import { PollService } from "../services/poll_service";
 
 interface HomeContextType {
-  findPolls(): Promise<TextPollData[]>;
+  findPolls(): Promise<(TextPollData | ImagePollData)[]>;
 }
 
 const HomeContext = createContext<HomeContextType | undefined>(undefined);
@@ -25,15 +25,39 @@ export function HomeProvider({ children }: HomeProviderProps) {
   const client = generateClient();
 
   //TODO: Update to include image polls
-  const findPolls = async (): Promise<TextPollData[]> => {
+  const findPolls = async (): Promise<(TextPollData | ImagePollData)[]> => {
     try {
       const textPolls = await PollService.findTextPolls();
-      const formattedPolls: TextPollData[] = [];
+      const imagePolls = await PollService.findImagePolls();
+
+      const formattedTextPolls: TextPollData[] = [];
+      const formattedImagePolls: ImagePollData[] = [];
 
       for (const textPoll of textPolls) {
-        const formattedPoll = await PollService.formatDataFromPoll(textPoll);
-        formattedPolls.push(formattedPoll);
+        const formattedTextPoll = await PollService.formatDataFromTextPoll(
+          textPoll
+        );
+        formattedTextPolls.push(formattedTextPoll);
       }
+
+      for (const imagePoll of imagePolls) {
+        const formattedImagePoll = await PollService.formatDataFromImagePoll(
+          imagePoll
+        );
+        formattedImagePolls.push(formattedImagePoll);
+      }
+
+      const formattedPolls = [...formattedTextPolls, ...formattedImagePolls];
+
+      formattedPolls.sort((a, b) => {
+        if (a.createdAt < b.createdAt) {
+          return -1;
+        }
+        if (a.createdAt > b.createdAt) {
+          return 1;
+        }
+        return 0;
+      });
 
       return formattedPolls;
     } catch (error) {
