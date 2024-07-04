@@ -25,7 +25,7 @@ Pushing changes:
 
 ## Pulling backend changes into the frontend
 
-To pull the latest changes from graphql execute `fetch-graphql.sh`
+To pull the latest changes from graphql execute `scripts/fetch_graphql.sh`
 
 This will ask for your `profile` and `API ID`
 
