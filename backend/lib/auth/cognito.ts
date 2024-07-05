@@ -20,6 +20,10 @@ export function createPollishAuth(
     userVerification: {
       emailStyle: awsCognito.VerificationEmailStyle.CODE,
     },
+    signInAliases: {
+      username: true,
+      email: true,
+    },
     autoVerify: {
       email: true,
     },
@@ -34,7 +38,7 @@ export function createPollishAuth(
   const userPoolClient = new awsCognito.UserPoolClient(
     scope,
     `${props.appName}-userpoolClient`,
-    { userPool }
+    { userPool, authFlows: { userPassword: true } }
   );
 
   const identityPool = new IdentityPool(
