@@ -1,8 +1,11 @@
+## Getting started
+
+If this is your first time setting up the repo on a new machine, run `scripts/project_setup.sh` to check that relevant tools are installed.
+
 ## Setting up the backend
 
-To be able to make changes to the backend you will need to set up AWS CDK:
+This section assumes that you have installed all tools previously missing from [Getting started](https://github.com/pollishmaster/pollish_app#getting-started). Then:
 
-- Install the AWS CDK `npm install -g aws-cdk`
 - Execute `aws configure sso`
 - Follow the prompts on screen
 
@@ -25,7 +28,7 @@ Pushing changes:
 
 ## Pulling backend changes into the frontend
 
-To pull the latest changes from graphql execute `fetch-graphql.sh`
+To pull the latest changes from graphql execute `scripts/fetch_graphql.sh`
 
 This will ask for your `profile` and `API ID`
 
