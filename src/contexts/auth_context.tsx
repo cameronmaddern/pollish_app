@@ -2,6 +2,7 @@ import {
   autoSignIn,
   confirmSignUp,
   getCurrentUser,
+  resendSignUpCode,
   signIn,
   signOut,
   signUp,
@@ -29,6 +30,10 @@ interface ActionResponse {
   message?: string;
 }
 
+interface LoginResponse extends ActionResponse {
+  requiresVerification: boolean;
+}
+
 interface AuthContextType {
   openLoginPopup: () => void;
   signupAction: ({
@@ -42,7 +47,7 @@ interface AuthContextType {
   loginAction: ({
     username,
     password,
-  }: LoginActionProps) => Promise<ActionResponse>;
+  }: LoginActionProps) => Promise<LoginResponse>;
   isUserSignedIn: () => Promise<boolean>;
   logoutAction: () => Promise<boolean>;
   showLoginPopup: boolean;
@@ -121,7 +126,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const loginAction = async ({ username, password }: LoginActionProps) => {
+  const loginAction = async ({
+    username,
+    password,
+  }: LoginActionProps): Promise<LoginResponse> => {
     try {
       const signInOutput = await signIn({
         username,
@@ -130,11 +138,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
           authFlowType: "USER_PASSWORD_AUTH",
         },
       });
+      if (signInOutput.nextStep.signInStep === "CONFIRM_SIGN_UP") {
+        setUsernameForVerification(username);
+        await resendSignUpCode({ username });
+        return { success: true, requiresVerification: true };
+      }
       console.log(signInOutput);
-      return { success: true };
+      return { success: true, requiresVerification: false };
     } catch (error) {
       console.log(error);
-      return { success: false, message: `${error}` };
+      return {
+        success: false,
+        requiresVerification: false,
+        message: `${error}`,
+      };
     }
   };
 

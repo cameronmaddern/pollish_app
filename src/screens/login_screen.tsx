@@ -55,12 +55,15 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
     }
   };
 
-  //TODO: Update to navigate to verify if the user is not verified
   const callSignIn = async () => {
     if (signInState) {
       const res = await loginAction({ username, password });
       if (res.success) {
-        navigation.navigate("Main");
+        if (res.requiresVerification) {
+          navigation.navigate("Verify");
+        } else {
+          navigation.navigate("Main");
+        }
       } else {
         Alert.alert(
           LOGIN_INVALID_TITLE,
