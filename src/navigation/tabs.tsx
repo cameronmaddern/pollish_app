@@ -16,8 +16,9 @@ import {
 } from "../screens";
 import * as Constants from "../../assets/constants/app_constants";
 import { useTheme } from "../contexts/theme_context";
+import { TabsStackParamList } from "../../type";
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabsStackParamList>();
 
 export default function Tabs() {
   const { colors } = useTheme();

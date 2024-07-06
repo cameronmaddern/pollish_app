@@ -9,6 +9,8 @@ import { AuthProvider } from "./src/contexts/auth_context";
 import { createStackNavigator } from "@react-navigation/stack";
 import { LoginScreen, VerifyScreen } from "./src/screens";
 import { RootStackParamList } from "./type";
+import { BackIcon } from "./assets/svg";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 Amplify.configure(amplifyConfig);
 
@@ -33,21 +35,31 @@ export default function App() {
   const AuthStack = createStackNavigator<RootStackParamList>();
 
   return (
-    <ThemeProvider>
-      <NavigationContainer>
-        <AuthProvider>
-          <AuthStack.Navigator>
-            {/* TODO: Implement a custom header to match figma design */}
-            <AuthStack.Screen
-              name="Main"
-              component={Tabs}
-              options={{ headerShown: false }}
-            />
-            <AuthStack.Screen name="Account" component={LoginScreen} />
-            <AuthStack.Screen name="Verify" component={VerifyScreen} />
-          </AuthStack.Navigator>
-        </AuthProvider>
-      </NavigationContainer>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider>
+        <NavigationContainer>
+          <AuthProvider>
+            <AuthStack.Navigator
+              screenOptions={{
+                headerBackTitleVisible: false,
+                headerBackImage: () => (
+                  <View style={{ paddingLeft: 10 }}>
+                    <BackIcon size={28} color="black" />
+                  </View>
+                ),
+              }}
+            >
+              <AuthStack.Screen
+                name="Main"
+                component={Tabs}
+                options={{ headerShown: false }}
+              />
+              <AuthStack.Screen name="Account" component={LoginScreen} />
+              <AuthStack.Screen name="Verify" component={VerifyScreen} />
+            </AuthStack.Navigator>
+          </AuthProvider>
+        </NavigationContainer>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

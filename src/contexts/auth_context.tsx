@@ -1,6 +1,13 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { LoginPopup } from "../modals";
-import { autoSignIn, confirmSignUp, signIn, signUp } from "aws-amplify/auth";
+import {
+  autoSignIn,
+  confirmSignUp,
+  getCurrentUser,
+  signIn,
+  signOut,
+  signUp,
+} from "aws-amplify/auth";
 
 interface SignupActionProps {
   username: string;
@@ -36,6 +43,9 @@ interface AuthContextType {
     username,
     password,
   }: LoginActionProps) => Promise<ActionResponse>;
+  isUserSignedIn: () => Promise<boolean>;
+  logoutAction: () => Promise<boolean>;
+  showLoginPopup: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -116,6 +126,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const signInOutput = await signIn({
         username,
         password,
+        options: {
+          authFlowType: "USER_PASSWORD_AUTH",
+        },
       });
       console.log(signInOutput);
       return { success: true };
@@ -125,13 +138,43 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const isUserSignedIn = async () => {
+    try {
+      await getCurrentUser();
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const logoutAction = async () => {
+    try {
+      await signOut();
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ openLoginPopup, signupAction, confirmSignupAction, loginAction }}
+      value={{
+        openLoginPopup,
+        signupAction,
+        confirmSignupAction,
+        loginAction,
+        isUserSignedIn,
+        logoutAction,
+        showLoginPopup,
+      }}
     >
       <LoginPopup
         visible={showLoginPopup}
-        onClose={() => setShowLoginPopup(false)}
+        onClose={() => {
+          setShowLoginPopup(false);
+        }}
       />
       {children}
     </AuthContext.Provider>

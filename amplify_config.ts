@@ -11,7 +11,7 @@ import {
 const amplifyConfig = {
   Auth: {
     Cognito: {
-      userPoolId: REACT_APP_USER_POOL_ID as string,
+      userPoolId: "ap-southeast-2_HlGnN9Vxh",
       identityPoolId: REACT_APP_IDENTITY_POOL_ID as string,
       userPoolClientId: REACT_APP_USER_POOL_WEB_CLIENT_ID as string,
     },
