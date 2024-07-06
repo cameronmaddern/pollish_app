@@ -1,10 +1,6 @@
-import { View, Alert, StyleSheet } from "react-native";
-import { useTheme } from "../contexts/theme_context";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { useNavigation, RouteProp } from "@react-navigation/native";
-import { RootStackParamList, RootStackProps } from "../../type";
-import { useAuth } from "../contexts/auth_context";
-import { AppButton } from "../components/shared/app_button";
+import { Alert, StyleSheet, View } from "react-native";
 import {
   LOGIN_EMAIL_PLACEHOLDER,
   LOGIN_INVALID_POPUP_DISMISS,
@@ -18,7 +14,11 @@ import {
   LOGIN_WITH_GOOGLE,
 } from "../../assets/constants/app_constants";
 import { GoogleIcon } from "../../assets/svg/google_icon";
+import { RootStackParamList, RootStackProps } from "../../type";
 import { AppTextInput, OrDivider } from "../components";
+import { AppButton } from "../components/shared/app_button";
+import { useAuth } from "../contexts/auth_context";
+import { useTheme } from "../contexts/theme_context";
 
 interface LoginScreenProps {
   route: RouteProp<RootStackParamList, "Account">;

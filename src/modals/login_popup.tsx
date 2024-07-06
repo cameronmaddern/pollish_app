@@ -1,10 +1,7 @@
-import React, { useRef } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useTheme } from "../contexts/theme_context";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackProps } from "../../type";
-import { AppButton } from "../components/shared/app_button";
-import { GoogleIcon } from "../../assets/svg/google_icon";
+import React, { useRef } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
   LOGIN_POPUP_CONTENT,
   LOGIN_POPUP_TITLE,
@@ -12,8 +9,11 @@ import {
   LOGIN_SIGNUP,
   LOGIN_WITH_GOOGLE,
 } from "../../assets/constants/app_constants";
+import { GoogleIcon } from "../../assets/svg/google_icon";
+import { RootStackProps } from "../../type";
 import { OrDivider } from "../components";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { AppButton } from "../components/shared/app_button";
+import { useTheme } from "../contexts/theme_context";
 
 interface LoginPopupProps {
   visible: boolean;

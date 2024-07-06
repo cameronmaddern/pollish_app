@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { LOGIN_OR } from "../../../assets/constants/app_constants";
 import { useTheme } from "../../contexts/theme_context";
 

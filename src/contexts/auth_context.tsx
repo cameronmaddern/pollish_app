@@ -1,5 +1,3 @@
-import { ReactNode, createContext, useContext, useState } from "react";
-import { LoginPopup } from "../modals";
 import {
   autoSignIn,
   confirmSignUp,
@@ -8,6 +6,8 @@ import {
   signOut,
   signUp,
 } from "aws-amplify/auth";
+import { ReactNode, createContext, useContext, useState } from "react";
+import { LoginPopup } from "../modals";
 
 interface SignupActionProps {
   username: string;

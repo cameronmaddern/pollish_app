@@ -1,16 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Amplify } from "aws-amplify";
-import amplifyConfig from "./amplify_config";
-import Tabs from "./src/navigation/tabs";
-import { ThemeProvider } from "./src/contexts/theme_context";
 import { useFonts } from "expo-font";
 import { ActivityIndicator, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import amplifyConfig from "./amplify_config";
+import { BackIcon } from "./assets/svg";
 import { AuthProvider } from "./src/contexts/auth_context";
-import { createStackNavigator } from "@react-navigation/stack";
+import { ThemeProvider } from "./src/contexts/theme_context";
+import Tabs from "./src/navigation/tabs";
 import { LoginScreen, VerifyScreen } from "./src/screens";
 import { RootStackParamList } from "./type";
-import { BackIcon } from "./assets/svg";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 Amplify.configure(amplifyConfig);
 

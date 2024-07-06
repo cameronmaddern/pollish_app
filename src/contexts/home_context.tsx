@@ -34,16 +34,14 @@ export function HomeProvider({ children }: HomeProviderProps) {
       const formattedImagePolls: ImagePollData[] = [];
 
       for (const textPoll of textPolls) {
-        const formattedTextPoll = await PollService.formatDataFromTextPoll(
-          textPoll
-        );
+        const formattedTextPoll =
+          await PollService.formatDataFromTextPoll(textPoll);
         formattedTextPolls.push(formattedTextPoll);
       }
 
       for (const imagePoll of imagePolls) {
-        const formattedImagePoll = await PollService.formatDataFromImagePoll(
-          imagePoll
-        );
+        const formattedImagePoll =
+          await PollService.formatDataFromImagePoll(imagePoll);
         formattedImagePolls.push(formattedImagePoll);
       }
 

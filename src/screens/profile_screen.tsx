@@ -1,14 +1,14 @@
-import { useCallback, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import { useAuth } from "../contexts/auth_context";
 import {
   useFocusEffect,
   useIsFocused,
   useNavigation,
 } from "@react-navigation/native";
-import { AppButton } from "../components";
-import { useTheme } from "../contexts/theme_context";
+import { useCallback, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import { TabsStackProps } from "../../type";
+import { AppButton } from "../components";
+import { useAuth } from "../contexts/auth_context";
+import { useTheme } from "../contexts/theme_context";
 
 export function ProfileScreen() {
   const { openLoginPopup, isUserSignedIn, logoutAction, showLoginPopup } =

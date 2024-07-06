@@ -1,22 +1,22 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { ColorValue, View, StyleSheet } from "react-native";
+import { ColorValue, StyleSheet, View } from "react-native";
+import * as Constants from "../../assets/constants/app_constants";
 import {
   CreateIcon,
   HomeIcon,
+  ProfileIcon,
   SearchIcon,
   TagsIcon,
-  ProfileIcon,
 } from "../../assets/svg";
+import { TabsStackParamList } from "../../type";
+import { useTheme } from "../contexts/theme_context";
 import {
-  TagsScreen,
-  ProfileScreen,
   CreateScreen,
   HomeScreen,
+  ProfileScreen,
   SearchScreen,
+  TagsScreen,
 } from "../screens";
-import * as Constants from "../../assets/constants/app_constants";
-import { useTheme } from "../contexts/theme_context";
-import { TabsStackParamList } from "../../type";
 
 const Tab = createBottomTabNavigator<TabsStackParamList>();
 
