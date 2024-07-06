@@ -1,14 +1,14 @@
-import { TextPoll, ImagePoll } from "../components";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-
-import { useTheme } from "../contexts/theme_context";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { NotificationIcon } from "../../assets/svg";
 import { useEffect, useState } from "react";
-import { HomeProvider, useHome } from "../contexts/home_context";
-import { ImagePollData, TextPollData } from "../components/poll/entities";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as constants from "../../assets/constants/app_constants";
+import { NotificationIcon } from "../../assets/svg";
+import { ImagePoll, TextPoll } from "../components";
+import { ModalProvider } from "../components/modals/more_modal_context";
+import type { ImagePollData, TextPollData } from "../components/poll/entities";
+import { HomeProvider, useHome } from "../contexts/home_context";
+import { useTheme } from "../contexts/theme_context";
 
 export function HomeScreen() {
   return (
@@ -55,25 +55,32 @@ export function HomeScreenInternal() {
         <View style={{ flex: 1 }} />
         <NotificationIcon color={colors.text} size={28} />
       </View>
-      <ScrollView>
-        <View style={{ height: 9 }} />
-        {polls.length > 0 &&
-          polls.map((poll, index) =>
-            //TODO: come up with a better way of determining if it's a text or image poll
-            "image" in poll ? (
-              <View key={index}>
-                <TextPoll pollData={poll as TextPollData} />
-                <View style={{ height: 9 }} />
-              </View>
-            ) : (
-              <View key={index}>
-                <ImagePoll pollData={poll as ImagePollData} />
-                <View style={{ height: 9 }} />
-              </View>
-            )
-          )}
-        <View style={{ height: 10 }} />
-      </ScrollView>
+
+      <ModalProvider>
+        <ScrollView>
+          {
+            //TODO change View boxes to padding/margin
+          }
+          <View style={{ height: 9 }} />
+          {polls.length > 0 &&
+            polls.map((poll, index) =>
+              //TODO: come up with a better way of determining if it's a text or image poll
+              "image" in poll ? (
+                <View key={index}>
+                  <TextPoll pollData={poll as TextPollData} />
+                  <View style={{ height: 9 }} />
+                </View>
+              ) : (
+                <View key={index}>
+                  <ImagePoll pollData={poll as ImagePollData} />
+                  <View style={{ height: 9 }} />
+                </View>
+              )
+            )}
+          <View style={{ height: 10 }} />
+        </ScrollView>
+      </ModalProvider>
+
       <View
         style={{
           height: tabBarHeight - 10,

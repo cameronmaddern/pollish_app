@@ -1,15 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { Amplify } from "aws-amplify";
-import amplifyConfig from "./amplify_config";
-import Tabs from "./src/navigation/tabs";
-import { ThemeProvider } from "./src/contexts/theme_context";
 import { useFonts } from "expo-font";
 import { ActivityIndicator, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import amplifyConfig from "./amplify_config";
+import { ThemeProvider } from "./src/contexts/theme_context";
+import Tabs from "./src/navigation/tabs";
 
 Amplify.configure(amplifyConfig);
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     "SFProRounded-Medium": require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
     "SFProRounded-Bold": require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
     "SFProRounded-Regular": require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),
@@ -27,10 +28,12 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider>
-      <NavigationContainer>
-        <Tabs />
-      </NavigationContainer>
-    </ThemeProvider>
+    <GestureHandlerRootView>
+      <ThemeProvider>
+        <NavigationContainer>
+          <Tabs />
+        </NavigationContainer>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

@@ -1,8 +1,9 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import { useTheme } from "../../../contexts/theme_context";
-import { MoreIcon, TimerIcon, ChatIcon } from "../../../../assets/svg";
+import { Image, StyleSheet, Text, View } from "react-native";
 import * as Constants from "../../../../assets/constants/app_constants";
-import { PollSharedData } from "../entities";
+import { ChatIcon, MoreIcon, TimerIcon } from "../../../../assets/svg";
+import { useTheme } from "../../../contexts/theme_context";
+import { useModal } from "../../modals/more_modal_context";
+import type { PollSharedData } from "../entities";
 
 type PollSharedScaffoldProps = {
   children: React.ReactNode;
@@ -14,6 +15,8 @@ export const PollSharedScaffold: React.FC<PollSharedScaffoldProps> = ({
   pollSharedData,
 }) => {
   const { textStyles, colors } = useTheme();
+
+  const { openModal } = useModal();
 
   return (
     <View
@@ -32,7 +35,11 @@ export const PollSharedScaffold: React.FC<PollSharedScaffoldProps> = ({
         <View style={{ width: 8 }} />
         <Text style={textStyles.bodyMedium}>{pollSharedData.username}</Text>
         <View style={{ flex: 1 }} />
-        <MoreIcon color={colors.textMuted} size={20} />
+        <MoreIcon
+          color={colors.textMuted}
+          size={20}
+          onPress={() => openModal(pollSharedData.id)}
+        />
       </View>
       {children}
       <View style={styles.genericContainer}>

@@ -1,9 +1,9 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import { useTheme } from "../../contexts/theme_context";
 import { useState } from "react";
-import { PollSharedScaffold } from "./subcomponents";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { useTheme } from "../../contexts/theme_context";
 import { toRoman } from "../../utils";
-import { PollOptionState, TextPollData } from "./entities";
+import { PollOptionState, type TextPollData } from "./entities";
+import { PollSharedScaffold } from "./subcomponents";
 import { PollTextOption } from "./subcomponents/poll_text_option";
 
 export function TextPoll({ pollData }: { pollData: TextPollData }) {
@@ -18,6 +18,7 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
   return (
     <PollSharedScaffold
       pollSharedData={{
+        id: pollData.id,
         username: pollData.username,
         timeRemaining: pollData.timeRemaining,
         profileImage: pollData.profileImage,
@@ -47,8 +48,8 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
                 optionSelected == null
                   ? PollOptionState.UNSELECTED
                   : optionSelected == option.id
-                  ? PollOptionState.VOTED_SELECTED
-                  : PollOptionState.VOTED_UNSELECTED
+                    ? PollOptionState.VOTED_SELECTED
+                    : PollOptionState.VOTED_UNSELECTED
               }
               updateOption={updateOption}
             />
