@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { ReactNode, createContext, useContext, useState } from "react";
 
 interface Colors {
   primary: string;
@@ -7,6 +7,7 @@ interface Colors {
   text: string;
   fadedOnPrimary: string;
   lightTextOnPrimary: string;
+  tertiary: string;
   contrastLowest: string;
   contrastHighest: string;
   contrastHigh: string;
@@ -49,6 +50,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     lightTextOnPrimary: "#8B8B8B",
     text: "#000000",
     fadedOnPrimary: "#F2F2F2",
+    tertiary: "#2A2A2A",
     contrastLowest: "#FFFFFF",
     contrastHighest: "#000000",
     contrastHigh: "#373737",
@@ -67,6 +69,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     background: "#151515",
     textMuted: "#5B5B5B",
     text: "#FFFFFF",
+    tertiary: "#D5D5D5",
     contrastLowest: "#000000",
     contrastHighest: "#FFFFFF",
     contrastHigh: "#FFFFFF",

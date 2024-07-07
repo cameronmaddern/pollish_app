@@ -1,10 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Amplify } from "aws-amplify";
-import amplifyConfig from "./amplify_config";
-import Tabs from "./src/navigation/tabs";
-import { ThemeProvider } from "./src/contexts/theme_context";
 import { useFonts } from "expo-font";
 import { ActivityIndicator, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import amplifyConfig from "./amplify_config";
+import { BackIcon } from "./assets/svg";
+import { AuthProvider } from "./src/contexts/auth_context";
+import { ThemeProvider } from "./src/contexts/theme_context";
+import Tabs from "./src/navigation/tabs";
+import { LoginScreen, VerifyScreen } from "./src/screens";
+import { RootStackParamList } from "./type";
 
 Amplify.configure(amplifyConfig);
 
@@ -26,11 +32,34 @@ export default function App() {
     );
   }
 
+  const AuthStack = createStackNavigator<RootStackParamList>();
+
   return (
-    <ThemeProvider>
-      <NavigationContainer>
-        <Tabs />
-      </NavigationContainer>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider>
+        <NavigationContainer>
+          <AuthProvider>
+            <AuthStack.Navigator
+              screenOptions={{
+                headerBackTitleVisible: false,
+                headerBackImage: () => (
+                  <View style={{ paddingLeft: 10 }}>
+                    <BackIcon size={28} color="black" />
+                  </View>
+                ),
+              }}
+            >
+              <AuthStack.Screen
+                name="Main"
+                component={Tabs}
+                options={{ headerShown: false }}
+              />
+              <AuthStack.Screen name="Account" component={LoginScreen} />
+              <AuthStack.Screen name="Verify" component={VerifyScreen} />
+            </AuthStack.Navigator>
+          </AuthProvider>
+        </NavigationContainer>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
