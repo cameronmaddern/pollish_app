@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 import {
   Animated,
-  StyleSheet,
   Image,
+  StyleSheet,
+  Text,
   TouchableOpacity,
   View,
-  Text,
 } from "react-native";
 import { useTheme } from "../../../contexts/theme_context";
 import { ImageOptionData, PollOptionState } from "../entities";
@@ -65,8 +65,8 @@ export function PollImageOption({
     state === PollOptionState.UNSELECTED
       ? 0
       : state === PollOptionState.VOTED_SELECTED
-      ? 2
-      : 1;
+        ? 2
+        : 1;
 
   const optionTextColor =
     state === PollOptionState.VOTED_SELECTED

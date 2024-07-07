@@ -1,10 +1,7 @@
-import React from "react";
-import { View, Text, Modal, StyleSheet, TouchableOpacity } from "react-native";
-import { useTheme } from "../contexts/theme_context";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackProps } from "../../type";
-import { AppButton } from "../components/shared/app_button";
-import { GoogleIcon } from "../../assets/svg/google_icon";
+import React, { useRef } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
   LOGIN_POPUP_CONTENT,
   LOGIN_POPUP_TITLE,
@@ -12,7 +9,11 @@ import {
   LOGIN_SIGNUP,
   LOGIN_WITH_GOOGLE,
 } from "../../assets/constants/app_constants";
+import { GoogleIcon } from "../../assets/svg/google_icon";
+import { RootStackProps } from "../../type";
 import { OrDivider } from "../components";
+import { AppButton } from "../components/shared/app_button";
+import { useTheme } from "../contexts/theme_context";
 
 interface LoginPopupProps {
   visible: boolean;
@@ -21,6 +22,8 @@ interface LoginPopupProps {
 
 export function LoginPopup({ visible, onClose }: LoginPopupProps) {
   const { textStyles, colors } = useTheme();
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = [375];
 
   const navigation = useNavigation<RootStackProps>();
 
@@ -42,17 +45,19 @@ export function LoginPopup({ visible, onClose }: LoginPopupProps) {
         backgroundColor: colors.contrastHighMediumTransparency,
       }}
     >
-      <Modal
-        visible={visible}
-        onRequestClose={onClose}
-        transparent={true}
-        animationType="slide"
+      <TouchableOpacity
+        onPress={onClose}
+        style={styles.closeAreaContainer}
+        activeOpacity={1}
+      />
+
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        enablePanDownToClose
+        onClose={onClose}
       >
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.modalBackground}
-          onPress={onClose}
-        >
+        <BottomSheetView>
           <View
             style={{
               ...styles.modalContent,
@@ -87,8 +92,8 @@ export function LoginPopup({ visible, onClose }: LoginPopupProps) {
               backgroundColor={colors.fadedOnPrimary}
             />
           </View>
-        </TouchableOpacity>
-      </Modal>
+        </BottomSheetView>
+      </BottomSheet>
     </View>
   );
 }
@@ -98,7 +103,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    zIndex: 10,
+    zIndex: 5,
+  },
+  closeAreaContainer: {
+    position: "absolute",
+    height: "100%",
+    width: "100%",
   },
   modalBackground: {
     flex: 1,
@@ -106,12 +116,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
+    zIndex: 10,
     padding: 20,
-    borderRadius: 20,
+    paddingTop: 10,
     alignItems: "center",
-    position: "absolute",
-    width: "100%",
-    bottom: 0,
-    height: 350,
   },
 });

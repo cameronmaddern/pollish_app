@@ -1,12 +1,12 @@
+import { useState } from "react";
 import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  View,
   ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useTheme } from "../../contexts/theme_context";
-import { useState } from "react";
 
 interface AppButtonProps {
   backgroundColor: string;

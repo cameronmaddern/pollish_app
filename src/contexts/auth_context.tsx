@@ -1,6 +1,14 @@
+import {
+  autoSignIn,
+  confirmSignUp,
+  getCurrentUser,
+  resendSignUpCode,
+  signIn,
+  signOut,
+  signUp,
+} from "aws-amplify/auth";
 import { ReactNode, createContext, useContext, useState } from "react";
 import { LoginPopup } from "../modals";
-import { autoSignIn, confirmSignUp, signIn, signUp } from "aws-amplify/auth";
 
 interface SignupActionProps {
   username: string;
@@ -22,6 +30,10 @@ interface ActionResponse {
   message?: string;
 }
 
+interface LoginResponse extends ActionResponse {
+  requiresVerification: boolean;
+}
+
 interface AuthContextType {
   openLoginPopup: () => void;
   signupAction: ({
@@ -35,7 +47,10 @@ interface AuthContextType {
   loginAction: ({
     username,
     password,
-  }: LoginActionProps) => Promise<ActionResponse>;
+  }: LoginActionProps) => Promise<LoginResponse>;
+  isUserSignedIn: () => Promise<boolean>;
+  logoutAction: () => Promise<boolean>;
+  showLoginPopup: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -111,27 +126,72 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const loginAction = async ({ username, password }: LoginActionProps) => {
+  const loginAction = async ({
+    username,
+    password,
+  }: LoginActionProps): Promise<LoginResponse> => {
     try {
       const signInOutput = await signIn({
         username,
         password,
+        options: {
+          authFlowType: "USER_PASSWORD_AUTH",
+        },
       });
+      if (signInOutput.nextStep.signInStep === "CONFIRM_SIGN_UP") {
+        setUsernameForVerification(username);
+        await resendSignUpCode({ username });
+        return { success: true, requiresVerification: true };
+      }
       console.log(signInOutput);
-      return { success: true };
+      return { success: true, requiresVerification: false };
     } catch (error) {
       console.log(error);
-      return { success: false, message: `${error}` };
+      return {
+        success: false,
+        requiresVerification: false,
+        message: `${error}`,
+      };
+    }
+  };
+
+  const isUserSignedIn = async () => {
+    try {
+      await getCurrentUser();
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const logoutAction = async () => {
+    try {
+      await signOut();
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   };
 
   return (
     <AuthContext.Provider
-      value={{ openLoginPopup, signupAction, confirmSignupAction, loginAction }}
+      value={{
+        openLoginPopup,
+        signupAction,
+        confirmSignupAction,
+        loginAction,
+        isUserSignedIn,
+        logoutAction,
+        showLoginPopup,
+      }}
     >
       <LoginPopup
         visible={showLoginPopup}
-        onClose={() => setShowLoginPopup(false)}
+        onClose={() => {
+          setShowLoginPopup(false);
+        }}
       />
       {children}
     </AuthContext.Provider>

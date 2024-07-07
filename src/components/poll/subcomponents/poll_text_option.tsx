@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import {
   Animated,
-  TouchableOpacity,
-  View,
   StyleSheet,
   Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useTheme } from "../../../contexts/theme_context";
 import { PollOptionState, TextOptionData } from "../entities";

@@ -1,16 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View, Alert } from "react-native";
-import { RootStackProps } from "../../type";
 import { useState } from "react";
-import { useTheme } from "../contexts/theme_context";
-import { useAuth } from "../contexts/auth_context";
+import { Alert, StyleSheet, View } from "react-native";
 import {
   LOGIN_INVALID_POPUP_DISMISS,
   LOGIN_INVALID_TITLE,
   LOGIN_VERIFY,
   LOGIN_VERIFY_PLACEHOLDER,
 } from "../../assets/constants/app_constants";
+import { RootStackProps } from "../../type";
 import { AppButton, AppTextInput } from "../components";
+import { useAuth } from "../contexts/auth_context";
+import { useTheme } from "../contexts/theme_context";
 
 //TODO: Implement a mechanism for resending the verification code
 export function VerifyScreen() {

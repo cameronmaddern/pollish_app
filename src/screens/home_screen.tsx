@@ -1,14 +1,14 @@
-import { TextPoll, ImagePoll } from "../components";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ImagePoll, TextPoll } from "../components";
 
-import { useTheme } from "../contexts/theme_context";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { NotificationIcon } from "../../assets/svg";
 import { useEffect, useState } from "react";
-import { HomeProvider, useHome } from "../contexts/home_context";
-import { ImagePollData, TextPollData } from "../components/poll/entities";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import * as constants from "../../assets/constants/app_constants";
+import { NotificationIcon } from "../../assets/svg";
+import { ImagePollData, TextPollData } from "../components/poll/entities";
+import { HomeProvider, useHome } from "../contexts/home_context";
+import { useTheme } from "../contexts/theme_context";
 
 export function HomeScreen() {
   return (

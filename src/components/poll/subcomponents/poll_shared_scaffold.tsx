@@ -1,7 +1,7 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import { useTheme } from "../../../contexts/theme_context";
-import { MoreIcon, TimerIcon, ChatIcon } from "../../../../assets/svg";
+import { Image, StyleSheet, Text, View } from "react-native";
 import * as Constants from "../../../../assets/constants/app_constants";
+import { ChatIcon, MoreIcon, TimerIcon } from "../../../../assets/svg";
+import { useTheme } from "../../../contexts/theme_context";
 import { PollSharedData } from "../entities";
 
 type PollSharedScaffoldProps = {
