@@ -1,12 +1,20 @@
 import type BottomSheet from "@gorhom/bottom-sheet";
 import type React from "react";
-import { createContext, useContext, useRef, useState } from "react";
-import MoreBottomSheet from "./more_bottom_sheet";
+import {
+  type RefObject,
+  createContext,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 
 type ModalContextType = {
   openModal: (postId: string, postTitle: string, postTopics: string[]) => void;
   closeModal: () => void;
   openModalId: string | null;
+  openModalTitle: string | null;
+  openModalTopics: string[] | null;
+  moreModalRef: RefObject<BottomSheet>;
 };
 
 interface Props {
@@ -36,17 +44,21 @@ export const ModalProvider: React.FC<Props> = ({ children }) => {
     moreModalRef.current?.close();
     setOpenModalId(null);
     setOpenModalTitle(null);
+    setOpenModalTopics(null);
   };
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal, openModalId }}>
+    <ModalContext.Provider
+      value={{
+        openModal,
+        closeModal,
+        openModalId,
+        openModalTitle,
+        openModalTopics,
+        moreModalRef,
+      }}
+    >
       {children}
-      <MoreBottomSheet
-        openModalId={openModalId}
-        openModalTitle={openModalTitle}
-        openModalTopics={openModalTopics}
-        ref={moreModalRef}
-      />
     </ModalContext.Provider>
   );
 };

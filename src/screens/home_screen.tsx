@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as constants from "../../assets/constants/app_constants";
 import { NotificationIcon } from "../../assets/svg";
 import { ImagePoll, TextPoll } from "../components";
+import MoreBottomSheet from "../components/modals/more_bottom_sheet";
 import { ModalProvider } from "../components/modals/more_modal_context";
 import type { ImagePollData, TextPollData } from "../components/poll/entities";
 import { HomeProvider, useHome } from "../contexts/home_context";
@@ -79,6 +80,7 @@ export function HomeScreenInternal() {
             )}
           <View style={{ height: 10 }} />
         </ScrollView>
+        <MoreBottomSheet />
       </ModalProvider>
 
       <View

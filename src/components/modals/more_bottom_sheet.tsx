@@ -20,20 +20,12 @@ import { useTheme } from "../../contexts/theme_context";
 import { AppButton } from "../shared/app_button";
 import { useModal } from "./more_modal_context";
 
-interface MoreBottomSheetProps {
-  openModalId: string | null;
-  openModalTitle: string | null;
-  openModalTopics: string[] | null;
-}
-
-export const MoreBottomSheet = React.forwardRef<
-  BottomSheet,
-  MoreBottomSheetProps
->(({ openModalTitle, openModalTopics }, ref) => {
+export const MoreBottomSheet = () => {
   const snapPoints = ["70%"];
   const { textStyles, colors } = useTheme();
   const [isWatching, setIsWatching] = useState<boolean>(false);
-  const { closeModal } = useModal();
+  const { closeModal, openModalTitle, openModalTopics, moreModalRef } =
+    useModal();
 
   // callbacks
   const renderBackdrop = useCallback(
@@ -50,7 +42,7 @@ export const MoreBottomSheet = React.forwardRef<
   // renders
   return (
     <BottomSheet
-      ref={ref}
+      ref={moreModalRef}
       index={-1}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
@@ -123,7 +115,7 @@ export const MoreBottomSheet = React.forwardRef<
       </BottomSheetView>
     </BottomSheet>
   );
-});
+};
 
 const styles = StyleSheet.create({
   modalContainer: {
