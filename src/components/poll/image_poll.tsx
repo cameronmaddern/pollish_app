@@ -17,9 +17,11 @@ export function ImagePoll({ pollData }: { pollData: ImagePollData }) {
     <PollSharedScaffold
       pollSharedData={{
         id: pollData.id,
+        title: pollData.title,
         username: pollData.username,
         profileImage: pollData.profileImage,
         timeRemaining: pollData.timeRemaining,
+        topics: pollData.topics,
       }}
     >
       <View style={{ height: 12 }} />

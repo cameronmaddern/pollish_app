@@ -18,6 +18,9 @@ export const PollSharedScaffold: React.FC<PollSharedScaffoldProps> = ({
 
   const { openModal } = useModal();
 
+  //TODO REMOVE HARD-CODED TOPICS
+  pollSharedData.topics = ["Basketball", "Running"];
+
   return (
     <View
       style={{
@@ -38,7 +41,13 @@ export const PollSharedScaffold: React.FC<PollSharedScaffoldProps> = ({
         <MoreIcon
           color={colors.textMuted}
           size={20}
-          onPress={() => openModal(pollSharedData.id)}
+          onPress={() =>
+            openModal(
+              pollSharedData.id,
+              pollSharedData.title,
+              pollSharedData.topics
+            )
+          }
         />
       </View>
       {children}

@@ -1,4 +1,4 @@
-import { TextOptionData } from "./text_option_data";
+import type { TextOptionData } from "./text_option_data";
 
 export type TextPollData = {
   id: string;
@@ -11,4 +11,5 @@ export type TextPollData = {
   timeRemaining: string;
   options: TextOptionData[];
   createdAt: string;
+  topics: string[];
 };

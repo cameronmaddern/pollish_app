@@ -4,7 +4,7 @@ import { createContext, useContext, useRef, useState } from "react";
 import MoreBottomSheet from "./more_bottom_sheet";
 
 type ModalContextType = {
-  openModal: (postId: string) => void;
+  openModal: (postId: string, postTitle: string, postTopics: string[]) => void;
   closeModal: () => void;
   openModalId: string | null;
 };
@@ -17,22 +17,36 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider: React.FC<Props> = ({ children }) => {
   const [openModalId, setOpenModalId] = useState<string | null>(null);
+  const [openModalTitle, setOpenModalTitle] = useState<string | null>(null);
+  const [openModalTopics, setOpenModalTopics] = useState<string[] | null>(null);
   const moreModalRef = useRef<BottomSheet>(null);
 
-  const openModal = (postId: string) => {
+  const openModal = (
+    postId: string,
+    postTitle: string,
+    postTopics: string[]
+  ) => {
     setOpenModalId(postId);
+    setOpenModalTitle(postTitle);
+    setOpenModalTopics(postTopics);
     moreModalRef.current?.expand();
   };
 
   const closeModal = () => {
     moreModalRef.current?.close();
     setOpenModalId(null);
+    setOpenModalTitle(null);
   };
 
   return (
     <ModalContext.Provider value={{ openModal, closeModal, openModalId }}>
       {children}
-      <MoreBottomSheet openModalId={openModalId} ref={moreModalRef} />
+      <MoreBottomSheet
+        openModalId={openModalId}
+        openModalTitle={openModalTitle}
+        openModalTopics={openModalTopics}
+        ref={moreModalRef}
+      />
     </ModalContext.Provider>
   );
 };

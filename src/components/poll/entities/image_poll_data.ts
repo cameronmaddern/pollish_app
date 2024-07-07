@@ -1,4 +1,4 @@
-import { ImageOptionData } from "./image_option_data";
+import type { ImageOptionData } from "./image_option_data";
 
 export type ImagePollData = {
   id: string;
@@ -10,4 +10,5 @@ export type ImagePollData = {
   timeRemaining: string;
   options: ImageOptionData[];
   createdAt: string;
+  topics: string[];
 };

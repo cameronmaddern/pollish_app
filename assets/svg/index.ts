@@ -7,3 +7,5 @@ export { MoreIcon } from "./more_icon";
 export { TimerIcon } from "./timer_icon";
 export { ChatIcon } from "./chat_icon";
 export { NotificationIcon } from "./notification_icon";
+export { EyeOpenIcon } from "./eye_open_icon";
+export { EyeClosedIcon } from "./eye_closed_icon";

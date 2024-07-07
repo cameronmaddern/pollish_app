@@ -19,9 +19,11 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
     <PollSharedScaffold
       pollSharedData={{
         id: pollData.id,
+        title: pollData.title,
         username: pollData.username,
         timeRemaining: pollData.timeRemaining,
         profileImage: pollData.profileImage,
+        topics: pollData.topics,
       }}
     >
       <View style={{ height: 8 }} />
