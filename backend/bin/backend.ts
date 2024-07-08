@@ -15,4 +15,4 @@ const app = new cdk.App();
 // To deploy changes to this new stack execute: cdk deploy BackendStack-Test --profile PROFILE_NAME
 // The below lines should never be uncommented in master
 // const username = "YOUR_USERNAME";
-// new BackendStack(app, "BackendStack-Test", `${username}-dev`);
+// new BackendStack(app, `BackendStack-Test-${username}`, `${username}-dev`);

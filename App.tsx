@@ -11,7 +11,7 @@ import { AuthProvider } from "./src/contexts/auth_context";
 import { ThemeProvider } from "./src/contexts/theme_context";
 import Tabs from "./src/navigation/tabs";
 import { LoginScreen, VerifyScreen } from "./src/screens";
-import { RootStackParamList } from "./type";
+import type { RootStackParamList } from "./type";
 
 if (REACT_APP_ENVIRONMENT == "prod") {
   Amplify.configure(amplifyConfig);
@@ -23,7 +23,7 @@ if (REACT_APP_ENVIRONMENT == "prod") {
 }
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     "SFProRounded-Medium": require("./assets/fonts/SF-Pro-Rounded-Medium.otf"),
     "SFProRounded-Bold": require("./assets/fonts/SF-Pro-Rounded-Bold.otf"),
     "SFProRounded-Regular": require("./assets/fonts/SF-Pro-Rounded-Regular.otf"),

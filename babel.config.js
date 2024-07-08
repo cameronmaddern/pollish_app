@@ -1,4 +1,4 @@
-module.exports = function (api) {
+module.exports = (api) => {
   api.cache(true);
   return {
     presets: ["babel-preset-expo"],
@@ -13,6 +13,7 @@ module.exports = function (api) {
           safe: false,
           allowUndefined: true,
         },
+        "react-native-reanimated/plugin", // must remain as last element in plugins array
       ],
     ],
   };
