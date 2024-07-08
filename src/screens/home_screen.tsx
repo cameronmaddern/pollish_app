@@ -5,11 +5,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as constants from "../../assets/constants/app_constants";
 import { NotificationIcon } from "../../assets/svg";
 import { ImagePoll, TextPoll } from "../components";
-import MoreBottomSheet from "../components/modals/more_bottom_sheet";
 import type { ImagePollData, TextPollData } from "../components/poll/entities";
 import { HomeProvider, useHome } from "../contexts/home_context";
 import { ModalProvider } from "../contexts/more_modal_context";
 import { useTheme } from "../contexts/theme_context";
+import { MoreBottomSheet } from "../modals";
 
 export function HomeScreen() {
   return (

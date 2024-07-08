@@ -14,11 +14,11 @@ import {
   POLL_TRACK,
   POLL_WATCH,
   POLL_WATCHING,
-} from "../../../assets/constants/app_constants";
-import { EyeClosedIcon, EyeOpenIcon } from "../../../assets/svg";
-import { useModal } from "../../contexts/more_modal_context";
-import { useTheme } from "../../contexts/theme_context";
-import { AppButton } from "../shared/app_button";
+} from "../../assets/constants/app_constants";
+import { EyeClosedIcon, EyeOpenIcon } from "../../assets/svg";
+import { AppButton } from "../components/shared/app_button";
+import { useModal } from "../contexts/more_modal_context";
+import { useTheme } from "../contexts/theme_context";
 
 export const MoreBottomSheet = () => {
   const snapPoints = ["70%"];
