@@ -2,7 +2,8 @@ import React from "react";
 import {
   type ColorValue,
   type GestureResponderEvent,
-  Pressable,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { Path, Svg } from "react-native-svg";
 
@@ -26,7 +27,13 @@ export default function Icon({
   onPress,
 }: IconProps) {
   return onPress ? (
-    <Pressable onPress={onPress}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        height: width,
+        justifyContent: "center",
+      }}
+    >
       <Svg
         width={width}
         height={width * heightScale}
@@ -35,15 +42,17 @@ export default function Icon({
       >
         <Path d={path} fill={pathFill} stroke={pathStroke} />
       </Svg>
-    </Pressable>
+    </TouchableOpacity>
   ) : (
-    <Svg
-      width={width}
-      height={width * heightScale}
-      viewBox={`0 0 ${width} ${width * heightScale}`}
-      fill={svgFill}
-    >
-      <Path d={path} fill={pathFill} stroke={pathStroke} />
-    </Svg>
+    <View style={{ height: width, justifyContent: "center" }}>
+      <Svg
+        width={width}
+        height={width * heightScale}
+        viewBox={`0 0 ${width} ${width * heightScale}`}
+        fill={svgFill}
+      >
+        <Path d={path} fill={pathFill} stroke={pathStroke} />
+      </Svg>
+    </View>
   );
 }

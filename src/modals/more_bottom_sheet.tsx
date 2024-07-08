@@ -70,20 +70,22 @@ export const MoreBottomSheet = () => {
         </View>
         <View style={[styles.childContainer]}>
           <Text style={textStyles.labelLargeProminent}>{POLL_TRACK}</Text>
-          <AppButton
-            icon={
-              isWatching ? (
-                <EyeOpenIcon color={colors.background} size={24} />
-              ) : (
-                <EyeClosedIcon color={colors.primary} size={24} />
-              )
-            }
-            backgroundColor={isWatching ? colors.primary : colors.background}
-            borderColor={isWatching ? "" : colors.primary}
-            text={isWatching ? POLL_WATCHING : POLL_WATCH}
-            textColor={isWatching ? colors.contrastLowest : colors.primary}
-            action={() => setIsWatching(!isWatching)}
-          />
+          <View style={styles.buttonContainer}>
+            <AppButton
+              icon={
+                isWatching ? (
+                  <EyeOpenIcon color={colors.background} size={24} />
+                ) : (
+                  <EyeClosedIcon color={colors.primary} size={24} />
+                )
+              }
+              backgroundColor={isWatching ? colors.primary : colors.background}
+              borderColor={isWatching ? "" : colors.primary}
+              text={isWatching ? POLL_WATCHING : POLL_WATCH}
+              textColor={isWatching ? colors.contrastLowest : colors.primary}
+              action={() => setIsWatching(!isWatching)}
+            />
+          </View>
         </View>
         <View style={[styles.childContainer, styles.actionContainer]}>
           <Text style={textStyles.labelLargeProminent}>{POLL_ACTION}</Text>
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     padding: 12,
-    rowGap: 8,
+    rowGap: 6,
   },
   childContainer: {
     width: "100%",

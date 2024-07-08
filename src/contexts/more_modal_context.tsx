@@ -23,7 +23,7 @@ interface Props {
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-export const ModalProvider: React.FC<Props> = ({ children }) => {
+export const MoreModalProvider: React.FC<Props> = ({ children }) => {
   const [openModalId, setOpenModalId] = useState<string | null>(null);
   const [openModalTitle, setOpenModalTitle] = useState<string | null>(null);
   const [openModalTopics, setOpenModalTopics] = useState<string[] | null>(null);

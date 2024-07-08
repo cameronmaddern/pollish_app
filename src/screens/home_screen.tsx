@@ -7,7 +7,7 @@ import { NotificationIcon } from "../../assets/svg";
 import { ImagePoll, TextPoll } from "../components";
 import type { ImagePollData, TextPollData } from "../components/poll/entities";
 import { HomeProvider, useHome } from "../contexts/home_context";
-import { ModalProvider } from "../contexts/more_modal_context";
+import { MoreModalProvider } from "../contexts/more_modal_context";
 import { useTheme } from "../contexts/theme_context";
 import { MoreBottomSheet } from "../modals";
 
@@ -57,7 +57,7 @@ export function HomeScreenInternal() {
         <NotificationIcon color={colors.text} size={28} />
       </View>
 
-      <ModalProvider>
+      <MoreModalProvider>
         <ScrollView>
           {
             //TODO change View boxes to padding/margin
@@ -81,7 +81,7 @@ export function HomeScreenInternal() {
           <View style={{ height: 10 }} />
         </ScrollView>
         <MoreBottomSheet />
-      </ModalProvider>
+      </MoreModalProvider>
 
       <View
         style={{
