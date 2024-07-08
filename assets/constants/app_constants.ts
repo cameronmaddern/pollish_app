@@ -7,6 +7,7 @@ export const TAGS_TAB = "Tags";
 export const PROFILE_TAB = "Profile";
 
 export const CHAT = "Chat";
+export const CLOSE = "Close";
 
 export const APP_NAME_P1 = "poll";
 export const APP_NAME_P2 = "ish";
@@ -32,3 +33,11 @@ export const LOGIN_FAILURE_MESSAGE =
   "We failed to log you in, please check your connection and try again";
 
 export const PROFILE_LOGOUT = "Logout";
+
+export const POLL_EXPLORE = "Explore Topics";
+export const POLL_TRACK = "Track this poll";
+export const POLL_ACTION = "Action";
+export const POLL_REPORT = "Report";
+export const POLL_DELETE = "Delete";
+export const POLL_WATCH = "Watch";
+export const POLL_WATCHING = "Watching";

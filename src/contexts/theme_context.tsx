@@ -1,4 +1,9 @@
-import React, { ReactNode, createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  type ReactNode,
+} from "react";
 
 interface Colors {
   primary: string;
@@ -6,6 +11,9 @@ interface Colors {
   textMuted: string;
   text: string;
   fadedOnPrimary: string;
+  mutedButtonBackground: string;
+  mutedButtonStroke: string;
+  strongButtonBackground: string;
   lightTextOnPrimary: string;
   tertiary: string;
   contrastLowest: string;
@@ -51,6 +59,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     text: "#000000",
     fadedOnPrimary: "#F2F2F2",
     tertiary: "#2A2A2A",
+    mutedButtonBackground: "rgba(217, 217, 217, 0.4)",
+    mutedButtonStroke: "#8B8B8B",
+    strongButtonBackground: "#2A2A2A",
     contrastLowest: "#FFFFFF",
     contrastHighest: "#000000",
     contrastHigh: "#373737",
@@ -70,6 +81,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     textMuted: "#5B5B5B",
     text: "#FFFFFF",
     tertiary: "#D5D5D5",
+    mutedButtonBackground: "rgba(51, 51, 51, 0.4)",
+    mutedButtonStroke: "#8B8B8B",
+    strongButtonBackground: "#D5D5D5",
     contrastLowest: "#000000",
     contrastHighest: "#FFFFFF",
     contrastHigh: "#FFFFFF",
