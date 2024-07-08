@@ -62,3 +62,19 @@ type Vote
   owner: String!
   poll: String!
 }
+
+# TODO: Auth rules are setup for testing purposes only
+type User
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "id"
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  username: String!
+}
