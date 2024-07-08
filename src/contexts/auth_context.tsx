@@ -1,4 +1,5 @@
 import {
+  AuthUser,
   autoSignIn,
   confirmSignUp,
   getCurrentUser,
@@ -8,7 +9,10 @@ import {
   signUp,
 } from "aws-amplify/auth";
 import { ReactNode, createContext, useContext, useState } from "react";
+import { LOGIN_FAILURE_MESSAGE } from "../../assets/constants/app_constants";
+import { User } from "../API";
 import { LoginPopup } from "../modals";
+import { UserService } from "../services/user_service";
 
 interface SignupActionProps {
   username: string;
@@ -48,9 +52,10 @@ interface AuthContextType {
     username,
     password,
   }: LoginActionProps) => Promise<LoginResponse>;
-  isUserSignedIn: () => Promise<boolean>;
+  getAuthenticatedUser: () => Promise<AuthUser | null>;
   logoutAction: () => Promise<boolean>;
   showLoginPopup: boolean;
+  user: User | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -70,6 +75,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [usernameForVerification, setUsernameForVerification] = useState("");
+  const [user, setUser] = useState<User | null>(null);
 
   const openLoginPopup = () => {
     setShowLoginPopup(true);
@@ -91,6 +97,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     try {
       const signInOutput = await autoSignIn();
+
+      await checkAndOrCreateUserObject();
+
       console.log(signInOutput);
       return { success: true };
     } catch (error) {
@@ -117,6 +126,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           },
         },
       });
+
       setUsernameForVerification(username);
       console.log("signup: ", isSignUpComplete, userId, nextStep);
       return { success: true };
@@ -135,6 +145,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         username,
         password,
         options: {
+          autoSignIn: {
+            authFlowType: "USER_PASSWORD_AUTH",
+          },
           authFlowType: "USER_PASSWORD_AUTH",
         },
       });
@@ -143,7 +156,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         await resendSignUpCode({ username });
         return { success: true, requiresVerification: true };
       }
-      console.log(signInOutput);
+
+      await checkAndOrCreateUserObject();
+
       return { success: true, requiresVerification: false };
     } catch (error) {
       console.log(error);
@@ -155,13 +170,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const isUserSignedIn = async () => {
+  const getAuthenticatedUser = async () => {
     try {
-      await getCurrentUser();
-      return true;
+      const res = await getCurrentUser();
+      return res;
     } catch (error) {
       console.log(error);
-      return false;
+      return null;
     }
   };
 
@@ -175,6 +190,34 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const checkAndOrCreateUserObject = async () => {
+    const userDetails = await getCurrentUser();
+
+    if (userDetails) {
+      try {
+        const fetchedUser = await UserService.fetchUser(userDetails.userId);
+        if (fetchedUser) {
+          setUser(fetchedUser);
+          return { success: true, requiresVerification: false };
+        } else {
+          const newUser = await UserService.createNewUser(
+            userDetails.username,
+            userDetails.userId
+          );
+          setUser(newUser);
+          return { success: true, requiresVerification: false };
+        }
+      } catch (error) {
+        console.log(error);
+        return {
+          success: false,
+          requiresVerification: false,
+          message: LOGIN_FAILURE_MESSAGE,
+        };
+      }
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -182,9 +225,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signupAction,
         confirmSignupAction,
         loginAction,
-        isUserSignedIn,
+        getAuthenticatedUser,
         logoutAction,
         showLoginPopup,
+        user,
       }}
     >
       <LoginPopup

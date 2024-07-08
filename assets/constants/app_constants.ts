@@ -28,3 +28,7 @@ export const LOGIN_INVALID_TITLE = "Invalid details";
 export const LOGIN_INVALID_POPUP_DISMISS = "Ok";
 export const LOGIN_VERIFY = "Verify";
 export const LOGIN_VERIFY_PLACEHOLDER = "Enter verification code";
+export const LOGIN_FAILURE_MESSAGE =
+  "We failed to log you in, please check your connection and try again";
+
+export const PROFILE_LOGOUT = "Logout";

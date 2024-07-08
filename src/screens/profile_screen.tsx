@@ -3,15 +3,19 @@ import {
   useIsFocused,
   useNavigation,
 } from "@react-navigation/native";
+import { generateClient } from "aws-amplify/api";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { PROFILE_LOGOUT } from "../../assets/constants/app_constants";
 import { TabsStackProps } from "../../type";
 import { AppButton } from "../components";
 import { useAuth } from "../contexts/auth_context";
 import { useTheme } from "../contexts/theme_context";
 
+const client = generateClient();
+
 export function ProfileScreen() {
-  const { openLoginPopup, isUserSignedIn, logoutAction, showLoginPopup } =
+  const { openLoginPopup, getAuthenticatedUser, logoutAction, showLoginPopup } =
     useAuth();
 
   const navigation = useNavigation<TabsStackProps>();
@@ -19,8 +23,8 @@ export function ProfileScreen() {
   const { colors } = useTheme();
 
   const checkLoggedIn = useCallback(() => {
-    isUserSignedIn().then((isSignedIn) => {
-      if (!isSignedIn) {
+    getAuthenticatedUser().then((user) => {
+      if (user == null) {
         openLoginPopup();
       }
     });
@@ -42,7 +46,7 @@ export function ProfileScreen() {
   return (
     <View style={styles.container}>
       <AppButton
-        text="Logout"
+        text={PROFILE_LOGOUT}
         action={logoutUser}
         backgroundColor={colors.primary}
         textColor={colors.contrastLowest}

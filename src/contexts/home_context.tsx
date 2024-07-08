@@ -1,4 +1,3 @@
-import { generateClient } from "aws-amplify/api";
 import { ReactNode, createContext, useContext } from "react";
 import { ImagePollData, TextPollData } from "../components/poll/entities";
 import { PollService } from "../services/poll_service";
@@ -22,8 +21,6 @@ interface HomeProviderProps {
 }
 
 export function HomeProvider({ children }: HomeProviderProps) {
-  const client = generateClient();
-
   //TODO: Update to include image polls
   const findPolls = async (): Promise<(TextPollData | ImagePollData)[]> => {
     try {
