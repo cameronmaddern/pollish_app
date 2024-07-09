@@ -21,8 +21,6 @@ export class PollService {
         throw "Failed to find list of text polls" + error;
       });
 
-    console.log(textPollData.data.listTextPolls);
-
     return textPollData.data.listTextPolls.items;
   }
 
