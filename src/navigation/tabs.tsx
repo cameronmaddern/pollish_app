@@ -10,6 +10,7 @@ import {
   TagsIcon,
 } from "../../assets/svg";
 import { TabsStackParamList } from "../../type";
+import { useAuth } from "../contexts/auth_context";
 import {
   CreatePollModalProvider,
   useCreatePollModal,
@@ -40,6 +41,15 @@ export default function Tabs() {
 function TabsInternal() {
   const { colors } = useTheme();
   const { openModal } = useCreatePollModal();
+  const { user, openLoginPopup } = useAuth();
+
+  function checkAuthForCreatePopup() {
+    if (user) {
+      openModal();
+    } else {
+      openLoginPopup();
+    }
+  }
 
   const getTabBarIcon = (
     routeName: string,
@@ -117,7 +127,7 @@ function TabsInternal() {
             tabBarButton: (props) => (
               <TouchableOpacity
                 {...props}
-                onPress={() => openModal()}
+                onPress={checkAuthForCreatePopup}
               ></TouchableOpacity>
             ),
           })}
