@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useTheme } from "../../contexts/theme_context";
-import { ImagePollData, PollOptionState } from "./entities";
+import { type ImagePollData, PollOptionState } from "./entities";
 import { PollImageOption, PollSharedScaffold } from "./subcomponents";
 
 export function ImagePoll({ pollData }: { pollData: ImagePollData }) {
@@ -16,9 +16,12 @@ export function ImagePoll({ pollData }: { pollData: ImagePollData }) {
   return (
     <PollSharedScaffold
       pollSharedData={{
+        id: pollData.id,
+        title: pollData.title,
         username: pollData.username,
         profileImage: pollData.profileImage,
         timeRemaining: pollData.timeRemaining,
+        topics: pollData.topics,
       }}
     >
       <View style={{ height: 12 }} />

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "../../contexts/theme_context";
 import { toRoman } from "../../utils";
-import { PollOptionState, TextPollData } from "./entities";
+import { PollOptionState, type TextPollData } from "./entities";
 import { PollSharedScaffold } from "./subcomponents";
 import { PollTextOption } from "./subcomponents/poll_text_option";
 
@@ -18,9 +18,12 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
   return (
     <PollSharedScaffold
       pollSharedData={{
+        id: pollData.id,
+        title: pollData.title,
         username: pollData.username,
         timeRemaining: pollData.timeRemaining,
         profileImage: pollData.profileImage,
+        topics: pollData.topics,
       }}
     >
       <View style={{ height: 8 }} />

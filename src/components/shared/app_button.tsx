@@ -10,6 +10,7 @@ import { useTheme } from "../../contexts/theme_context";
 
 interface AppButtonProps {
   backgroundColor: string;
+  borderColor?: string;
   textColor: string;
   text: string;
   action: () => void | Promise<void>;
@@ -19,6 +20,7 @@ interface AppButtonProps {
 export function AppButton({
   action,
   backgroundColor,
+  borderColor = "",
   textColor,
   text,
   icon,
@@ -42,6 +44,8 @@ export function AppButton({
       style={{
         ...styles.button,
         backgroundColor,
+        borderColor,
+        borderWidth: borderColor != "" ? 1 : 0,
       }}
       onPress={handlePress}
       disabled={isLoading}
