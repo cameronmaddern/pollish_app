@@ -2,8 +2,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import React, { useState } from "react";
-import { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {
   CLOSE,
@@ -21,7 +20,7 @@ import { useModal } from "../contexts/more_modal_context";
 import { useTheme } from "../contexts/theme_context";
 
 export const MoreBottomSheet = () => {
-  const snapPoints = ["70%"];
+  const snapPoints = [520];
   const { textStyles, colors } = useTheme();
   const [isWatching, setIsWatching] = useState<boolean>(false);
   const { closeModal, openModalTitle, openModalTopics, moreModalRef } =

@@ -1,7 +1,7 @@
 import React, {
   createContext,
-  useState,
   useContext,
+  useState,
   type ReactNode,
 } from "react";
 
@@ -25,6 +25,7 @@ interface Colors {
   contrastLowMediumTransparency: string;
   contrastMediumMediumTransparency: string;
   contrastMediumLowTransparency: string;
+  contrastLow: string;
 }
 
 interface ThemeContextType {
@@ -71,6 +72,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     contrastLowMediumTransparency: "rgba(255, 255, 255, 0.6)",
     contrastMediumMediumTransparency: "rgba(139,139,139,0.5)",
     contrastMediumLowTransparency: "rgba(139,139,139,0.8)",
+    contrastLow: "#D9D9D9",
   };
 
   const darkColors: Colors = {
@@ -93,6 +95,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     contrastLowMediumTransparency: "rgba(13,13,13,0.6)",
     contrastMediumMediumTransparency: "rgba(139,139,139,0.5)",
     contrastMediumLowTransparency: "rgba(139,139,139,0.8)",
+    contrastLow: "#333333",
   };
 
   const toggleColorScheme = (): void => {

@@ -11,7 +11,6 @@ import {
 import { ReactNode, createContext, useContext, useState } from "react";
 import { LOGIN_FAILURE_MESSAGE } from "../../assets/constants/app_constants";
 import { User } from "../API";
-import { LoginPopup } from "../modals";
 import { UserService } from "../services/user_service";
 
 interface SignupActionProps {
@@ -55,6 +54,7 @@ interface AuthContextType {
   getAuthenticatedUser: () => Promise<AuthUser | null>;
   logoutAction: () => Promise<boolean>;
   showLoginPopup: boolean;
+  closeLoginPopup: () => void;
   user: User | null;
 }
 
@@ -79,6 +79,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const openLoginPopup = () => {
     setShowLoginPopup(true);
+  };
+
+  const closeLoginPopup = () => {
+    setShowLoginPopup(false);
   };
 
   const confirmSignupAction = async ({
@@ -228,15 +232,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         getAuthenticatedUser,
         logoutAction,
         showLoginPopup,
+        closeLoginPopup,
         user,
       }}
     >
-      <LoginPopup
-        visible={showLoginPopup}
-        onClose={() => {
-          setShowLoginPopup(false);
-        }}
-      />
       {children}
     </AuthContext.Provider>
   );

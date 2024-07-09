@@ -41,3 +41,10 @@ export const POLL_REPORT = "Report";
 export const POLL_DELETE = "Delete";
 export const POLL_WATCH = "Watch";
 export const POLL_WATCHING = "Watching";
+
+export const CREATE_POLL_POPUP_STANDARD = "Standard Poll";
+export const CREATE_POLL_POPUP_IMAGE = "Image Poll";
+export const CREATE_POLL_POPUP_TEXT = "Text Poll";
+export const CREATE_POLL_POPUP_TITLE = "Create a Poll";
+export const CREATE_POLL_POPUP_CONTENT =
+  "Be heard, settle that debate, find out what others think";
