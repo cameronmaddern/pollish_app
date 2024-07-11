@@ -3,7 +3,13 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import React, { useCallback } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
@@ -21,7 +27,10 @@ import { useCreatePollModal } from "../contexts/create_poll_modal_context";
 import { useTheme } from "../contexts/theme_context";
 
 export function CreatePollPopup() {
-  const snapPoints = [660];
+  const snapPoints = Platform.select({
+    ios: [660],
+    android: [700],
+  });
   const { colors, textStyles } = useTheme();
   const { closeModal, createPollModalRef } = useCreatePollModal();
   // TODO: This is being called from above the navigation stack, should be fixed when we convert bottom sheets to modals

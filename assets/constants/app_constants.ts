@@ -47,4 +47,4 @@ export const CREATE_POLL_POPUP_IMAGE = "Image Poll";
 export const CREATE_POLL_POPUP_TEXT = "Text Poll";
 export const CREATE_POLL_POPUP_TITLE = "Create a Poll";
 export const CREATE_POLL_POPUP_CONTENT =
-  "Be heard, settle that debate, find out what others think";
+  "Be heard. Settle that debate. Find out what others think.";

@@ -3,7 +3,7 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import {
   CLOSE,
   POLL_ACTION,
@@ -20,7 +20,10 @@ import { useModal } from "../contexts/more_modal_context";
 import { useTheme } from "../contexts/theme_context";
 
 export const MoreBottomSheet = () => {
-  const snapPoints = [520];
+  const snapPoints = Platform.select({
+    ios: [520],
+    android: [560],
+  });
   const { textStyles, colors } = useTheme();
   const [isWatching, setIsWatching] = useState<boolean>(false);
   const { closeModal, openModalTitle, openModalTopics, moreModalRef } =

@@ -29,6 +29,7 @@ import {
 
 const Tab = createBottomTabNavigator<TabsStackParamList>();
 
+//TODO POL-14: Remove nested providers when modals are changed to bottom sheets
 export default function Tabs() {
   return (
     <CreatePollModalProvider>
