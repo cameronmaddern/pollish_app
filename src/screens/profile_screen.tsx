@@ -7,7 +7,7 @@ import { generateClient } from "aws-amplify/api";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { PROFILE_LOGOUT } from "../../assets/constants/app_constants";
-import { TabsStackProps } from "../../type";
+import type { TabsStackProps } from "../../type";
 import { AppButton } from "../components";
 import { useAuth } from "../contexts/auth_context";
 import { useTheme } from "../contexts/theme_context";
