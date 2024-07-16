@@ -7,29 +7,29 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "../../../contexts/theme_context";
-import { PollOptionState, TextOptionData } from "../entities";
+import { PollOptionState, type TextOptionData } from "../entities";
 
 interface PollOptionProps {
   data: TextOptionData;
   number: string;
   state: PollOptionState;
-  updateOption: (option: string) => void;
+  votes: number;
+  totalVotes: number;
+  onVote: (optionId: string) => void;
 }
 
 export function PollTextOption({
   data,
   number,
   state,
-  updateOption,
+  votes,
+  totalVotes,
+  onVote,
 }: PollOptionProps) {
   const { textStyles, colors } = useTheme();
 
   const fillAnim = useRef(new Animated.Value(0)).current;
-  const percentageOfVote = (data.numberOfVotes / data.totalVotes) * 100;
-
-  const handlePress = async () => {
-    updateOption(data.id);
-  };
+  const percentageOfVote = totalVotes > 0 ? (votes / totalVotes) * 100 : 0;
 
   useEffect(() => {
     fillAnim.setValue(0);
@@ -39,6 +39,18 @@ export function PollTextOption({
       useNativeDriver: false,
     }).start();
   }, [state]);
+
+  const formatPercentage = (percentage: number) => {
+    if (percentage < 0 || percentage > 100) {
+      throw new Error("Invalid percentage - must be between 0 and 100");
+    }
+
+    if (percentage === 0 || percentage === 100) {
+      return percentage.toFixed(0) + "%";
+    }
+
+    return percentage.toFixed(1) + "%";
+  };
 
   const fillWidth = fillAnim.interpolate({
     inputRange: [0, 100],
@@ -79,7 +91,7 @@ export function PollTextOption({
 
   return (
     <TouchableOpacity
-      onPress={handlePress}
+      onPress={() => onVote(data.id)}
       style={{
         ...styles.touchableContainer,
         borderColor: optionBorderColor,
@@ -125,7 +137,7 @@ export function PollTextOption({
             color: percentageColor,
           }}
         >
-          {percentageOfVote}%
+          {formatPercentage(percentageOfVote)}
         </Text>
         <View style={{ width: 12 }} />
       </View>

@@ -1,6 +1,7 @@
-import { ReactNode, createContext, useContext } from "react";
-import { ImagePollData, TextPollData } from "../components/poll/entities";
+import { type ReactNode, createContext, useContext } from "react";
+import type { ImagePollData, TextPollData } from "../components/poll/entities";
 import { PollService } from "../services/poll_service";
+import { useAuth } from "./auth_context";
 
 interface HomeContextType {
   findPolls(): Promise<(TextPollData | ImagePollData)[]>;
@@ -22,6 +23,7 @@ interface HomeProviderProps {
 
 export function HomeProvider({ children }: HomeProviderProps) {
   //TODO: Update to include image polls
+  const { user } = useAuth();
   const findPolls = async (): Promise<(TextPollData | ImagePollData)[]> => {
     try {
       const textPolls = await PollService.findTextPolls();
@@ -31,14 +33,18 @@ export function HomeProvider({ children }: HomeProviderProps) {
       const formattedImagePolls: ImagePollData[] = [];
 
       for (const textPoll of textPolls) {
-        const formattedTextPoll =
-          await PollService.formatDataFromTextPoll(textPoll);
+        const formattedTextPoll = await PollService.formatDataFromTextPoll(
+          textPoll,
+          user
+        );
         formattedTextPolls.push(formattedTextPoll);
       }
 
       for (const imagePoll of imagePolls) {
-        const formattedImagePoll =
-          await PollService.formatDataFromImagePoll(imagePoll);
+        const formattedImagePoll = await PollService.formatDataFromImagePoll(
+          imagePoll,
+          user
+        );
         formattedImagePolls.push(formattedImagePoll);
       }
 
