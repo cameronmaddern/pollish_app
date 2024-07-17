@@ -7,6 +7,7 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "../../../contexts/theme_context";
+import { formatPercentage } from "../../../utils";
 import { PollOptionState, type TextOptionData } from "../entities";
 
 interface PollOptionProps {
@@ -39,18 +40,6 @@ export function PollTextOption({
       useNativeDriver: false,
     }).start();
   }, [state]);
-
-  const formatPercentage = (percentage: number) => {
-    if (percentage < 0 || percentage > 100) {
-      throw new Error("Invalid percentage - must be between 0 and 100");
-    }
-
-    if (percentage === 0 || percentage === 100) {
-      return percentage.toFixed(0) + "%";
-    }
-
-    return percentage.toFixed(1) + "%";
-  };
 
   const fillWidth = fillAnim.interpolate({
     inputRange: [0, 100],

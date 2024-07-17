@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "../../../contexts/theme_context";
+import { formatPercentage } from "../../../utils";
 import { type ImageOptionData, PollOptionState } from "../entities";
 
 interface PollImageOptionProps {
@@ -43,18 +44,6 @@ export function PollImageOption({
     inputRange: [0, 100],
     outputRange: ["0%", "100%"],
   });
-
-  const formatPercentage = (percentage: number) => {
-    if (percentage < 0 || percentage > 100) {
-      throw new Error("Invalid percentage - must be between 0 and 100");
-    }
-
-    if (percentage === 0 || percentage === 100) {
-      return percentage.toFixed(0) + "%";
-    }
-
-    return percentage.toFixed(1) + "%";
-  };
 
   const imageBorderColor =
     state === PollOptionState.VOTED_SELECTED
