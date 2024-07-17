@@ -96,6 +96,7 @@ export class PollService {
       profileImage: poll.image,
       timeRemaining: "7h",
       createdAt: poll.createdAt,
+      topics: [],
     };
   }
 
@@ -163,6 +164,7 @@ export class PollService {
         "https://cdn.openart.ai/stable_diffusion/2a2e915092e222b3a1e00970c4bc6833b30a4e0d_2000x2000.webp",
       timeRemaining: "7h",
       createdAt: poll.createdAt,
+      topics: [],
     };
   }
 }

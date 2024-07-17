@@ -7,9 +7,7 @@ import { NotificationIcon } from "../../assets/svg";
 import { ImagePoll, TextPoll } from "../components";
 import type { ImagePollData, TextPollData } from "../components/poll/entities";
 import { HomeProvider, useHome } from "../contexts/home_context";
-import { MoreModalProvider } from "../contexts/more_modal_context";
 import { useTheme } from "../contexts/theme_context";
-import { MoreBottomSheet } from "../modals";
 
 export function HomeScreen() {
   return (
@@ -57,31 +55,28 @@ export function HomeScreenInternal() {
         <NotificationIcon color={colors.text} size={28} />
       </View>
 
-      <MoreModalProvider>
-        <ScrollView>
-          {
-            //TODO change View boxes to padding/margin
-          }
-          <View style={{ height: 9 }} />
-          {polls.length > 0 &&
-            polls.map((poll, index) =>
-              //TODO: come up with a better way of determining if it's a text or image poll
-              "image" in poll ? (
-                <View key={index}>
-                  <TextPoll pollData={poll as TextPollData} />
-                  <View style={{ height: 9 }} />
-                </View>
-              ) : (
-                <View key={index}>
-                  <ImagePoll pollData={poll as ImagePollData} />
-                  <View style={{ height: 9 }} />
-                </View>
-              )
-            )}
-          <View style={{ height: 10 }} />
-        </ScrollView>
-        <MoreBottomSheet />
-      </MoreModalProvider>
+      <ScrollView>
+        {
+          //TODO change View boxes to padding/margin
+        }
+        <View style={{ height: 9 }} />
+        {polls.length > 0 &&
+          polls.map((poll, index) =>
+            //TODO: come up with a better way of determining if it's a text or image poll
+            "image" in poll ? (
+              <View key={index}>
+                <TextPoll pollData={poll as TextPollData} />
+                <View style={{ height: 9 }} />
+              </View>
+            ) : (
+              <View key={index}>
+                <ImagePoll pollData={poll as ImagePollData} />
+                <View style={{ height: 9 }} />
+              </View>
+            )
+          )}
+        <View style={{ height: 10 }} />
+      </ScrollView>
 
       <View
         style={{

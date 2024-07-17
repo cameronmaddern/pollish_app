@@ -7,8 +7,9 @@ import { ActivityIndicator, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { amplifyConfig, amplifyConfigDev } from "./amplify_config";
 import { BackIcon } from "./assets/svg";
-import { AuthProvider } from "./src/contexts/auth_context";
+import { AuthProvider, useAuth } from "./src/contexts/auth_context";
 import { ThemeProvider } from "./src/contexts/theme_context";
+import { LoginPopup } from "./src/modals";
 import Tabs from "./src/navigation/tabs";
 import { LoginScreen, VerifyScreen } from "./src/screens";
 import type { RootStackParamList } from "./type";
@@ -40,34 +41,44 @@ export default function App() {
     );
   }
 
-  const AuthStack = createStackNavigator<RootStackParamList>();
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
         <NavigationContainer>
           <AuthProvider>
-            <AuthStack.Navigator
-              screenOptions={{
-                headerBackTitleVisible: false,
-                headerBackImage: () => (
-                  <View style={{ paddingLeft: 10 }}>
-                    <BackIcon size={28} color="black" />
-                  </View>
-                ),
-              }}
-            >
-              <AuthStack.Screen
-                name="Main"
-                component={Tabs}
-                options={{ headerShown: false }}
-              />
-              <AuthStack.Screen name="Account" component={LoginScreen} />
-              <AuthStack.Screen name="Verify" component={VerifyScreen} />
-            </AuthStack.Navigator>
+            <AppInternal />
           </AuthProvider>
         </NavigationContainer>
       </ThemeProvider>
     </GestureHandlerRootView>
+  );
+}
+
+function AppInternal() {
+  const AuthStack = createStackNavigator<RootStackParamList>();
+  const { showLoginPopup, closeLoginPopup } = useAuth();
+
+  return (
+    <>
+      <AuthStack.Navigator
+        screenOptions={{
+          headerBackTitleVisible: false,
+          headerBackImage: () => (
+            <View style={{ paddingLeft: 10 }}>
+              <BackIcon size={28} color="black" />
+            </View>
+          ),
+        }}
+      >
+        <AuthStack.Screen
+          name="Main"
+          component={Tabs}
+          options={{ headerShown: false }}
+        />
+        <AuthStack.Screen name="Account" component={LoginScreen} />
+        <AuthStack.Screen name="Verify" component={VerifyScreen} />
+      </AuthStack.Navigator>
+      <LoginPopup visible={showLoginPopup} onClose={closeLoginPopup} />
+    </>
   );
 }

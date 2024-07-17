@@ -1,11 +1,11 @@
 import type BottomSheet from "@gorhom/bottom-sheet";
 import type React from "react";
 import {
-  type RefObject,
   createContext,
   useContext,
   useRef,
   useState,
+  type RefObject,
 } from "react";
 
 type ModalContextType = {
