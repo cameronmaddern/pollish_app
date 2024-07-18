@@ -1,4 +1,4 @@
-import { RouteProp, useNavigation } from "@react-navigation/native";
+import { type RouteProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import {
@@ -14,8 +14,8 @@ import {
   LOGIN_WITH_GOOGLE,
 } from "../../assets/constants/app_constants";
 import { GoogleIcon } from "../../assets/svg/google_icon";
-import { RootStackParamList, RootStackProps } from "../../type";
-import { AppTextInput, OrDivider } from "../components";
+import type { RootStackParamList, RootStackProps } from "../../type";
+import { AppTextInput, OrDivider } from "../components/shared";
 import { AppButton } from "../components/shared/app_button";
 import { useAuth } from "../contexts/auth_context";
 import { useTheme } from "../contexts/theme_context";

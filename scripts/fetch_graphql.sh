@@ -30,5 +30,5 @@ profile=${profile:-$saved_profile}
 
 echo "$api_id $profile" > "$config_file"
 
-aws appsync get-introspection-schema --api-id $api_id --format SDL --profile $profile schema.graphql
-npx @aws-amplify/cli codegen
+aws appsync get-introspection-schema --api-id "$api_id" --format SDL --profile "$profile" schema.graphql
+npx @aws-amplify/cli codegen --maxDepth 3

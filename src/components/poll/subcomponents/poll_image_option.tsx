@@ -8,27 +8,28 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "../../../contexts/theme_context";
-import { ImageOptionData, PollOptionState } from "../entities";
+import { formatPercentage } from "../../../utils";
+import { type ImageOptionData, PollOptionState } from "../entities";
 
 interface PollImageOptionProps {
   data: ImageOptionData;
   state: PollOptionState;
-  updateOption: (option: string) => void;
+  votes: number;
+  totalVotes: number;
+  onVote: (optionId: string) => void;
 }
 
 export function PollImageOption({
   data,
   state,
-  updateOption,
+  votes,
+  totalVotes,
+  onVote,
 }: PollImageOptionProps) {
   const { textStyles, colors } = useTheme();
 
   const fillAnim = useRef(new Animated.Value(0)).current;
-  const percentageOfVote = (data.numberOfVotes / data.totalVotes) * 100;
-
-  const handlePress = () => {
-    updateOption(data.id);
-  };
+  const percentageOfVote = totalVotes > 0 ? (votes / totalVotes) * 100 : 0;
 
   useEffect(() => {
     fillAnim.setValue(0);
@@ -74,7 +75,10 @@ export function PollImageOption({
       : colors.contrastMediumMediumTransparency;
 
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.touchableContainer}>
+    <TouchableOpacity
+      onPress={() => onVote(data.id)}
+      style={styles.touchableContainer}
+    >
       <View style={styles.contentsContainer}>
         <Image
           style={styles.pollImage}
@@ -116,7 +120,7 @@ export function PollImageOption({
                 lineHeight: 36,
               }}
             >
-              {percentageOfVote}%
+              {formatPercentage(percentageOfVote)}
             </Text>
             <View style={{ width: 8 }} />
             <Text

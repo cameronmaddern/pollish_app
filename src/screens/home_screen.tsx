@@ -1,11 +1,12 @@
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as constants from "../../assets/constants/app_constants";
 import { NotificationIcon } from "../../assets/svg";
 import { ImagePoll, TextPoll } from "../components";
 import type { ImagePollData, TextPollData } from "../components/poll/entities";
+import { useAuth } from "../contexts/auth_context";
 import { HomeProvider, useHome } from "../contexts/home_context";
 import { useTheme } from "../contexts/theme_context";
 
@@ -23,15 +24,27 @@ export function HomeScreenInternal() {
   const tabBarHeight = useBottomTabBarHeight();
   const [polls, setPolls] = useState<(TextPollData | ImagePollData)[]>([]);
   const { findPolls } = useHome();
+  const { user, setUser, getAuthenticatedUser } = useAuth();
 
   const locatePolls = async () => {
     const foundPolls = await findPolls();
     setPolls(foundPolls);
   };
 
-  useEffect(() => {
-    locatePolls();
+  const checkLoggedIn = useCallback(async () => {
+    const user = await getAuthenticatedUser();
+    setUser(user);
   }, []);
+
+  useEffect(() => {
+    checkLoggedIn();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      locatePolls();
+    }
+  }, [user]);
 
   return (
     <View

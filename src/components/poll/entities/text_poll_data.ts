@@ -7,9 +7,12 @@ export type TextPollData = {
   username: string;
   profileImage: string;
   totalVotes: number;
+  userVoteId: string;
+  voteMap: Record<string, number>;
   //TODO: This should be a datetime
   timeRemaining: string;
   options: TextOptionData[];
+  optionSelected: string | null;
   createdAt: string;
   topics: string[];
 };

@@ -10,8 +10,8 @@ import {
   LOGIN_WITH_GOOGLE,
 } from "../../assets/constants/app_constants";
 import { GoogleIcon } from "../../assets/svg/google_icon";
-import { RootStackProps } from "../../type";
-import { OrDivider } from "../components";
+import type { RootStackProps } from "../../type";
+import { OrDivider } from "../components/shared";
 import { AppButton } from "../components/shared/app_button";
 import { useTheme } from "../contexts/theme_context";
 

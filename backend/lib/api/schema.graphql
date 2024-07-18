@@ -54,7 +54,7 @@ type Vote
   @model
   @auth(
     rules: [
-      { allow: public, provider: apiKey, operations: [read, create, update] }
+      { allow: public, provider: apiKey, operations: [read, create, update, delete] }
     ]
   ) {
   id: ID!

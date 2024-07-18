@@ -19,7 +19,7 @@ This section assumes that you have installed all tools previously missing from [
 
 NOTE: sso profile will require reauthentication after 7 days, to reauthenticate, run:
 
-`aws login --profile <profile-name>`
+`aws sso login --profile <profile-name>`
 
 ## Setting up backend DEV environment
 
@@ -28,11 +28,11 @@ To set up a dev stack navigate to `backend/bin/backend.ts` and replace `YOUR_USE
 To deploy your dev stack:
 
 - Navigate to the `backend` directory
-- Execute `cdk deploy BackendStack-Test --profile <profile-name>`
+- Execute `cdk deploy BackendStack-Test-<username> --profile <profile-name>`
 
 You will need to update the `.env` with these new values.
 
-To test changes simply execute `cdk deploy BackendStack-Test --profile <profile-name>`
+To test changes simply execute `cdk deploy BackendStack-Test-<username> --profile <profile-name>`. The `<username>` value can be found in the AWS Portal, or as the value you set in `backend/bin/backend.ts`. 
 
 ## Pulling backend changes into the frontend
 

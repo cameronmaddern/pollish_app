@@ -1,5 +1,4 @@
 import {
-  AuthUser,
   autoSignIn,
   confirmSignUp,
   getCurrentUser,
@@ -8,9 +7,17 @@ import {
   signOut,
   signUp,
 } from "aws-amplify/auth";
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 import { LOGIN_FAILURE_MESSAGE } from "../../assets/constants/app_constants";
-import { User } from "../API";
+import type { User } from "../API";
+import { LoginPopup } from "../modals";
 import { UserService } from "../services/user_service";
 
 interface SignupActionProps {
@@ -51,10 +58,11 @@ interface AuthContextType {
     username,
     password,
   }: LoginActionProps) => Promise<LoginResponse>;
-  getAuthenticatedUser: () => Promise<AuthUser | null>;
+  getAuthenticatedUser: () => Promise<User | null>;
   logoutAction: () => Promise<boolean>;
   showLoginPopup: boolean;
   closeLoginPopup: () => void;
+  setUser: Dispatch<SetStateAction<User | null>>;
   user: User | null;
 }
 
@@ -177,7 +185,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const getAuthenticatedUser = async () => {
     try {
       const res = await getCurrentUser();
-      return res;
+      const fetchedUser = await UserService.fetchUser(res.userId);
+      return fetchedUser;
     } catch (error) {
       console.log(error);
       return null;
@@ -233,6 +242,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         logoutAction,
         showLoginPopup,
         closeLoginPopup,
+        setUser,
         user,
       }}
     >
