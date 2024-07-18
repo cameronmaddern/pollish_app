@@ -1,7 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { ColorValue, StyleSheet, View } from "react-native";
+import { ColorValue, StyleSheet, TouchableOpacity, View } from "react-native";
 import * as Constants from "../../assets/constants/app_constants";
 import {
+  BackIcon,
   CreateIcon,
   HomeIcon,
   ProfileIcon,
@@ -9,7 +10,15 @@ import {
   TagsIcon,
 } from "../../assets/svg";
 import { TabsStackParamList } from "../../type";
+import { useAuth } from "../contexts/auth_context";
+import {
+  CreatePollModalProvider,
+  useCreatePollModal,
+} from "../contexts/create_poll_modal_context";
+import { MoreModalProvider } from "../contexts/more_modal_context";
 import { useTheme } from "../contexts/theme_context";
+import { MoreBottomSheet } from "../modals";
+import { CreatePollPopup } from "../modals/create_poll_popup";
 import {
   CreateScreen,
   HomeScreen,
@@ -20,8 +29,28 @@ import {
 
 const Tab = createBottomTabNavigator<TabsStackParamList>();
 
+//TODO POL-14: Remove nested providers when modals are changed to bottom sheets
 export default function Tabs() {
+  return (
+    <CreatePollModalProvider>
+      <TabsInternal />
+      <CreatePollPopup />
+    </CreatePollModalProvider>
+  );
+}
+
+function TabsInternal() {
   const { colors } = useTheme();
+  const { openModal } = useCreatePollModal();
+  const { user, openLoginPopup } = useAuth();
+
+  function checkAuthForCreatePopup() {
+    if (user) {
+      openModal();
+    } else {
+      openLoginPopup();
+    }
+  }
 
   const getTabBarIcon = (
     routeName: string,
@@ -59,26 +88,56 @@ export default function Tabs() {
   };
 
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => getTabBarIcon(route.name, color, size),
-        tabBarShowLabel: false,
-        tabBarInactiveTintColor: colors.textMuted,
-        tabBarActiveTintColor: colors.primary,
-        headerShown: false,
-        tabBarStyle: {
-          ...styles.tabBarStyle,
-          borderColor: colors.background,
-          borderTopColor: colors.background,
-        },
-      })}
-    >
-      <Tab.Screen name={Constants.HOME_TAB} component={HomeScreen} />
-      <Tab.Screen name={Constants.SEARCH_TAB} component={SearchScreen} />
-      <Tab.Screen name={Constants.CREATE_TAB} component={CreateScreen} />
-      <Tab.Screen name={Constants.TAGS_TAB} component={TagsScreen} />
-      <Tab.Screen name={Constants.PROFILE_TAB} component={ProfileScreen} />
-    </Tab.Navigator>
+    //TODO: Moving it here is not a long term solution, but it will do for now
+    <MoreModalProvider>
+      <Tab.Navigator
+        screenOptions={({ route, navigation }) => ({
+          tabBarIcon: ({ color, size }) =>
+            getTabBarIcon(route.name, color, size),
+          tabBarShowLabel: false,
+          tabBarInactiveTintColor: colors.textMuted,
+          tabBarActiveTintColor: colors.primary,
+          headerShown: false,
+          tabBarStyle: {
+            ...styles.tabBarStyle,
+            borderColor: colors.background,
+            borderTopColor: colors.background,
+            display:
+              navigation.getState().routes[navigation.getState().index].name ===
+              Constants.CREATE_TAB
+                ? "none"
+                : "flex",
+          },
+        })}
+      >
+        <Tab.Screen name={Constants.HOME_TAB} component={HomeScreen} />
+        <Tab.Screen name={Constants.SEARCH_TAB} component={SearchScreen} />
+        <Tab.Screen
+          name={Constants.CREATE_TAB}
+          component={CreateScreen}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingLeft: 10 }}
+                onPress={() => navigation.goBack()}
+              >
+                <BackIcon size={28} color={colors.contrastHigh} />
+              </TouchableOpacity>
+            ),
+            tabBarButton: (props) => (
+              <TouchableOpacity
+                {...props}
+                onPress={checkAuthForCreatePopup}
+              ></TouchableOpacity>
+            ),
+          })}
+        />
+        <Tab.Screen name={Constants.TAGS_TAB} component={TagsScreen} />
+        <Tab.Screen name={Constants.PROFILE_TAB} component={ProfileScreen} />
+      </Tab.Navigator>
+      <MoreBottomSheet />
+    </MoreModalProvider>
   );
 }
 

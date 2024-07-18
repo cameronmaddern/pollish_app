@@ -61,6 +61,7 @@ interface AuthContextType {
   getAuthenticatedUser: () => Promise<User | null>;
   logoutAction: () => Promise<boolean>;
   showLoginPopup: boolean;
+  closeLoginPopup: () => void;
   setUser: Dispatch<SetStateAction<User | null>>;
   user: User | null;
 }
@@ -86,6 +87,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const openLoginPopup = () => {
     setShowLoginPopup(true);
+  };
+
+  const closeLoginPopup = () => {
+    setShowLoginPopup(false);
   };
 
   const confirmSignupAction = async ({
@@ -236,16 +241,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         getAuthenticatedUser,
         logoutAction,
         showLoginPopup,
+        closeLoginPopup,
         setUser,
         user,
       }}
     >
-      <LoginPopup
-        visible={showLoginPopup}
-        onClose={() => {
-          setShowLoginPopup(false);
-        }}
-      />
       {children}
     </AuthContext.Provider>
   );
