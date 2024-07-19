@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { LOGIN_OR } from "../../../assets/constants/app_constants";
 import { useTheme } from "../../contexts/theme_context";
@@ -19,6 +20,8 @@ export function OrDivider() {
           style={{
             ...textStyles.bodyMedium,
             color: colors.lightTextOnPrimary,
+            textAlign: "center",
+            includeFontPadding: false,
           }}
         >
           {LOGIN_OR}
