@@ -21,14 +21,19 @@ export class UserService {
   }
 
   static async fetchUser(userId: string) {
-    const userData = await client.graphql({
-      query: queries.getUser,
-      variables: {
-        id: userId,
-      },
-      authMode: "oidc",
-    });
+    try {
+      const userData = await client.graphql({
+        query: queries.getUser,
+        variables: {
+          id: userId,
+        },
+        authMode: "oidc",
+      });
 
-    return userData.data.getUser;
+      return userData.data.getUser ?? null;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 }

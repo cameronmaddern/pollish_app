@@ -48,3 +48,30 @@ export const CREATE_POLL_POPUP_TEXT = "Text Poll";
 export const CREATE_POLL_POPUP_TITLE = "Create a Poll";
 export const CREATE_POLL_POPUP_CONTENT =
   "Be heard. Settle that debate. Find out what others think.";
+
+export const CREATE_NEXT = "Next";
+export const CREATE_TITLE_PLACEHOLDER = "Add a title...";
+export const CREATE_PREVIEW_SUBHEADING = "Review your poll and let's publish!";
+export const CREATE_PREVIEW_HIGHLIGHT = "Preview";
+export const CREATE_PREVIEW_HEADING = "Here is a ";
+export const CREATE_PREVIEW_BACK = "Back to Options";
+export const CREATE_IMAGE_SUBHEADING =
+  "Your polls look better with pictures, add one.";
+export const CREATE_IMAGE_HIGHLIGHT = "Image";
+export const CREATE_IMAGE_HEADING = "Style it with an ";
+export const CREATE_IMAGE_BACK = "Back to Title";
+export const CREATE_TEXT_OPTION_SUBHEADING =
+  "What are the options? You can add up to 4.";
+export const CREATE_TEXT_OPTION_HIGHLIGHT = "Options";
+export const CREATE_TEXT_OPTION_HEADING = "Let's add some ";
+export const CREATE_TEXT_OPTION_BACK = "Back to Image";
+export const CREATE_TEXT_OPTION_ADD = "Add option";
+export const CREATE_TEXT_OPTION_PLACEHOLDER = "Empty option...";
+export const CREATE_TITLE_SUBHEADING =
+  "What's on your mind? Ask that burning question!";
+export const CREATE_TITLE_HIGHLIGHT = "Title";
+export const CREATE_TITLE_HEADING = "Give your poll a ";
+export const CREATE_TITLE_BACK = "Back";
+export const CREATE_IMAGE_LIBRARY_ICON = "Image Library";
+export const CREATE_IMAGE_CAMERA_ICON = "Camera";
+export const CREATE_IMAGE_REMOVE = "Remove Image";

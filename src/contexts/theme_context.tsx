@@ -10,6 +10,7 @@ interface Colors {
   background: string;
   textMuted: string;
   text: string;
+  primaryFaded: string;
   fadedOnPrimary: string;
   mutedButtonBackground: string;
   mutedButtonStroke: string;
@@ -26,6 +27,7 @@ interface Colors {
   contrastMediumMediumTransparency: string;
   contrastMediumLowTransparency: string;
   contrastLow: string;
+  fadedText: string;
 }
 
 interface ThemeContextType {
@@ -51,14 +53,15 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
-  // Define your color schemes
   const lightColors: Colors = {
     primary: "#4BDDB4",
+    primaryFaded: "#DBF8F0",
     background: "#F6F6F6",
     textMuted: "#5B5B5B",
     lightTextOnPrimary: "#8B8B8B",
     text: "#000000",
     fadedOnPrimary: "#F2F2F2",
+    fadedText: "#818181",
     tertiary: "#2A2A2A",
     mutedButtonBackground: "rgba(217, 217, 217, 0.4)",
     mutedButtonStroke: "#8B8B8B",
@@ -77,7 +80,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   const darkColors: Colors = {
     primary: "#4BDDB4",
+    primaryFaded: "#0B392C",
     fadedOnPrimary: "#191919",
+    fadedText: "#818181",
     lightTextOnPrimary: "#8B8B8B",
     background: "#151515",
     textMuted: "#5B5B5B",
@@ -128,6 +133,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     appName: {
       fontFamily: "Nunito-Bold",
       fontSize: 28,
+    },
+    labelSmall: {
+      fontFamily: "SFProRounded-Medium",
+      fontSize: 12,
     },
   };
 

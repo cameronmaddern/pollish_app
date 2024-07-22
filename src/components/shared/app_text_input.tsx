@@ -1,24 +1,33 @@
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, TextStyle } from "react-native";
 import { useTheme } from "../../contexts/theme_context";
 
 interface AppTextInputProps {
   placeholder: string;
   valueSetter: (text: string) => void;
+  value: string;
   isSecure?: boolean;
+  textStyling?: TextStyle;
+  maxLength?: number;
 }
 
 export function AppTextInput({
   placeholder,
   valueSetter,
+  textStyling,
+  value,
+  maxLength,
   isSecure = false,
 }: AppTextInputProps) {
   const { colors } = useTheme();
   return (
     <TextInput
       style={{
+        ...textStyling,
         ...styles.textInput,
         backgroundColor: colors.fadedOnPrimary,
       }}
+      maxLength={maxLength ?? 30}
+      value={value}
       secureTextEntry={isSecure}
       autoCapitalize="none"
       onChangeText={(text) => valueSetter(text)}

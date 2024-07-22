@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
-  type ColorValue,
   StyleSheet,
   TouchableOpacity,
   View,
+  type ColorValue,
 } from "react-native";
 import * as Constants from "../../assets/constants/app_constants";
 import {
@@ -121,7 +121,6 @@ function TabsInternal() {
           name={Constants.CREATE_TAB}
           component={CreateScreen}
           options={({ navigation }) => ({
-            headerShown: true,
             headerLeft: () => (
               <TouchableOpacity
                 style={{ paddingLeft: 10 }}
