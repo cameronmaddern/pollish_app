@@ -7,6 +7,8 @@ import {
   REACT_APP_APPSYNC_REGION,
   REACT_APP_IDENTITY_POOL_ID,
   REACT_APP_IDENTITY_POOL_ID_DEV,
+  REACT_APP_S3_BUCKET,
+  REACT_APP_S3_BUCKET_DEV,
   REACT_APP_USER_POOL_ID,
   REACT_APP_USER_POOL_ID_DEV,
   REACT_APP_USER_POOL_WEB_CLIENT_ID,
@@ -29,6 +31,12 @@ export const amplifyConfig = {
       apiKey: REACT_APP_API_KEY,
     },
   },
+  Storage: {
+    S3: {
+      region: REACT_APP_APPSYNC_REGION as string,
+      bucket: REACT_APP_S3_BUCKET as string,
+    },
+  },
 };
 
 export const amplifyConfigDev = {
@@ -45,6 +53,12 @@ export const amplifyConfigDev = {
       region: REACT_APP_APPSYNC_REGION as string,
       defaultAuthMode: REACT_APP_APPSYNC_AUTH_TYPE,
       apiKey: REACT_APP_API_KEY_DEV,
+    },
+  },
+  Storage: {
+    S3: {
+      region: REACT_APP_APPSYNC_REGION as string,
+      bucket: REACT_APP_S3_BUCKET_DEV as string,
     },
   },
 };

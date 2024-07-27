@@ -6,7 +6,7 @@ import {
 import { generateClient } from "aws-amplify/api";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { PROFILE_LOGOUT } from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import type { TabsStackProps } from "../../type";
 import { AppButton } from "../components";
 import { useAuth } from "../contexts/auth_context";
@@ -46,7 +46,7 @@ export function ProfileScreen() {
   return (
     <View style={styles.container}>
       <AppButton
-        text={PROFILE_LOGOUT}
+        text={AppConstants.PROFILE_LOGOUT}
         action={logoutUser}
         backgroundColor={colors.primary}
         textColor={colors.contrastLowest}

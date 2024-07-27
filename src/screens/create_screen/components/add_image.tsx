@@ -1,11 +1,7 @@
 import * as ImagePicker from "expo-image-picker";
 import { useEffect } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import {
-  CREATE_IMAGE_CAMERA_ICON,
-  CREATE_IMAGE_LIBRARY_ICON,
-  CREATE_IMAGE_REMOVE,
-} from "../../../../assets/constants/app_constants";
+import { AppConstants } from "../../../../assets/constants/app_constants";
 import { CameraIcon } from "../../../../assets/svg/camera_icon";
 import { DeleteIcon } from "../../../../assets/svg/delete_icon";
 import { ImageLibraryIcon } from "../../../../assets/svg/image_library_icon";
@@ -34,7 +30,7 @@ export const AddImage = ({ image, setImage }: AddImageProps) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
-      quality: 1,
+      quality: 0.5,
     });
 
     if (!result.canceled) {
@@ -55,7 +51,7 @@ export const AddImage = ({ image, setImage }: AddImageProps) => {
           icon={<DeleteIcon size={22} color={colors.contrastHighest} />}
           action={() => setImage(null)}
           backgroundColor={colors.fadedOnPrimary}
-          text={CREATE_IMAGE_REMOVE}
+          text={AppConstants.CREATE_IMAGE_REMOVE}
           textColor={colors.contrastHighest}
         />
       </>
@@ -73,7 +69,7 @@ export const AddImage = ({ image, setImage }: AddImageProps) => {
           <ImageLibraryIcon size={36} />
           <View style={{ height: 6 }} />
           <Text style={{ ...textStyles.labelSmall, color: colors.fadedText }}>
-            {CREATE_IMAGE_LIBRARY_ICON}
+            {AppConstants.CREATE_IMAGE_LIBRARY_ICON}
           </Text>
         </TouchableOpacity>
         <View style={{ width: 20 }} />
@@ -86,7 +82,7 @@ export const AddImage = ({ image, setImage }: AddImageProps) => {
           <CameraIcon size={36} />
           <View style={{ height: 6 }} />
           <Text style={{ ...textStyles.labelSmall, color: colors.fadedText }}>
-            {CREATE_IMAGE_CAMERA_ICON}
+            {AppConstants.CREATE_IMAGE_CAMERA_ICON}
           </Text>
         </TouchableOpacity>
       </View>

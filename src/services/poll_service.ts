@@ -1,4 +1,6 @@
 import { generateClient } from "aws-amplify/api";
+import { getUrl, uploadData } from "aws-amplify/storage";
+import { v4 as uuidv4 } from "uuid";
 import type {
   ImageOption,
   ImagePoll,
@@ -93,6 +95,52 @@ export class PollService {
     return deleteVoteData.data.deleteVote;
   }
 
+  static async createStandardPoll(
+    imageStr: string,
+    pollTitle: string,
+    options: string[]
+  ) {
+    const imgResponse = await fetch(imageStr);
+    const blob = await imgResponse.blob();
+    const pollPath = "public/pollimages/" + uuidv4();
+
+    try {
+      await uploadData({
+        path: pollPath,
+        data: blob,
+      }).result;
+
+      const createStandardPoll = await client.graphql({
+        query: mutations.createTextPoll,
+        variables: {
+          input: {
+            title: pollTitle,
+            image: pollPath,
+          },
+        },
+        authMode: "apiKey",
+      });
+
+      options.map(async (option) => {
+        await client.graphql({
+          query: mutations.createTextOption,
+          variables: {
+            input: {
+              text: option,
+              poll: createStandardPoll.data.createTextPoll.id,
+            },
+          },
+          authMode: "apiKey",
+        });
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   static async formatDataFromTextPoll(
     poll: TextPoll,
     user: User | null
@@ -160,18 +208,22 @@ export class PollService {
         };
       });
 
+    const retrievePollImageFromS3 = await getUrl({
+      path: poll.image,
+    });
+
     //TODO: replace hardcoded values with real data
     return {
       id: poll.id,
       title: poll.title,
-      image: poll.image,
+      image: retrievePollImageFromS3.url.href,
       options: pollOptions,
       optionSelected: optionSelected,
       totalVotes: listVotes.data.listVotes.items.length,
       userVoteId: userVoteId,
       voteMap: voteMap,
       username: "example_user",
-      profileImage: poll.image,
+      profileImage: retrievePollImageFromS3.url.href,
       timeRemaining: "7h",
       createdAt: poll.createdAt,
       topics: ["Basketball", "Apple"],

@@ -1,8 +1,14 @@
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import React, { useCallback, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import * as constants from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import { NotificationIcon } from "../../assets/svg";
 import { ImagePoll, TextPoll } from "../components";
 import type { ImagePollData, TextPollData } from "../components/poll/entities";
@@ -23,12 +29,16 @@ export function HomeScreenInternal() {
   const insets = useSafeAreaInsets();
   const tabBarHeight = useBottomTabBarHeight();
   const [polls, setPolls] = useState<(TextPollData | ImagePollData)[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
   const { findPolls } = useHome();
   const { user, setUser, getAuthenticatedUser } = useAuth();
 
   const locatePolls = async () => {
+    setRefreshing(true);
+
     const foundPolls = await findPolls();
     setPolls(foundPolls);
+    setRefreshing(false);
   };
 
   const checkLoggedIn = useCallback(async () => {
@@ -61,14 +71,20 @@ export function HomeScreenInternal() {
         }}
       >
         <Text style={textStyles.appName}>
-          <Text style={{ color: colors.primary }}>{constants.APP_NAME_P1}</Text>
-          <Text>{constants.APP_NAME_P2}</Text>
+          <Text style={{ color: colors.primary }}>
+            {AppConstants.APP_NAME_P1}
+          </Text>
+          <Text>{AppConstants.APP_NAME_P2}</Text>
         </Text>
         <View style={{ flex: 1 }} />
         <NotificationIcon color={colors.text} size={28} />
       </View>
 
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={locatePolls} />
+        }
+      >
         {
           //TODO change View boxes to padding/margin
         }

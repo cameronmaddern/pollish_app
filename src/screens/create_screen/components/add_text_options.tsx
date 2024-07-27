@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import {
-  CREATE_TEXT_OPTION_ADD,
-  CREATE_TEXT_OPTION_PLACEHOLDER,
-} from "../../../../assets/constants/app_constants";
+import { AppConstants } from "../../../../assets/constants/app_constants";
 import { DeleteIcon } from "../../../../assets/svg/delete_icon";
 import { AppButton, AppTextInput } from "../../../components";
 import { useTheme } from "../../../contexts/theme_context";
@@ -25,7 +22,7 @@ export const AddTextOptions = ({
       {options.length < 4 && (
         <>
           <AppTextInput
-            placeholder={CREATE_TEXT_OPTION_PLACEHOLDER}
+            placeholder={AppConstants.CREATE_TEXT_OPTION_PLACEHOLDER}
             textStyling={{ textAlign: "center" }}
             valueSetter={setNewOption}
             value={newOption}
@@ -34,7 +31,7 @@ export const AddTextOptions = ({
           <View style={{ height: 12 }} />
           <AppButton
             backgroundColor={colors.primary}
-            text={CREATE_TEXT_OPTION_ADD}
+            text={AppConstants.CREATE_TEXT_OPTION_ADD}
             action={() => {
               setOptions((prev) => [...prev, newOption]);
               setNewOption("");

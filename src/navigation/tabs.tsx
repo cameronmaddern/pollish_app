@@ -5,7 +5,7 @@ import {
   View,
   type ColorValue,
 } from "react-native";
-import * as Constants from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import {
   BackIcon,
   CreateIcon,
@@ -63,15 +63,15 @@ function TabsInternal() {
     size: number
   ) => {
     switch (routeName) {
-      case Constants.HOME_TAB:
+      case AppConstants.HOME_TAB:
         return <HomeIcon color={color} size={size} />;
-      case Constants.SEARCH_TAB:
+      case AppConstants.SEARCH_TAB:
         return <SearchIcon color={color} size={size} />;
-      case Constants.TAGS_TAB:
+      case AppConstants.TAGS_TAB:
         return <TagsIcon color={color} size={size} />;
-      case Constants.PROFILE_TAB:
+      case AppConstants.PROFILE_TAB:
         return <ProfileIcon color={color} size={size} />;
-      case Constants.CREATE_TAB:
+      case AppConstants.CREATE_TAB:
         return (
           <View
             style={[
@@ -109,16 +109,16 @@ function TabsInternal() {
             borderTopColor: colors.background,
             display:
               navigation.getState().routes[navigation.getState().index].name ===
-              Constants.CREATE_TAB
+              AppConstants.CREATE_TAB
                 ? "none"
                 : "flex",
           },
         })}
       >
-        <Tab.Screen name={Constants.HOME_TAB} component={HomeScreen} />
-        <Tab.Screen name={Constants.SEARCH_TAB} component={SearchScreen} />
+        <Tab.Screen name={AppConstants.HOME_TAB} component={HomeScreen} />
+        <Tab.Screen name={AppConstants.SEARCH_TAB} component={SearchScreen} />
         <Tab.Screen
-          name={Constants.CREATE_TAB}
+          name={AppConstants.CREATE_TAB}
           component={CreateScreen}
           options={({ navigation }) => ({
             headerLeft: () => (
@@ -137,8 +137,8 @@ function TabsInternal() {
             ),
           })}
         />
-        <Tab.Screen name={Constants.TAGS_TAB} component={TagsScreen} />
-        <Tab.Screen name={Constants.PROFILE_TAB} component={ProfileScreen} />
+        <Tab.Screen name={AppConstants.TAGS_TAB} component={TagsScreen} />
+        <Tab.Screen name={AppConstants.PROFILE_TAB} component={ProfileScreen} />
       </Tab.Navigator>
       <MoreBottomSheet />
     </MoreModalProvider>

@@ -8,16 +8,15 @@ import {
   signUp,
 } from "aws-amplify/auth";
 import {
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
   createContext,
   useContext,
   useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
 } from "react";
-import { LOGIN_FAILURE_MESSAGE } from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import type { User } from "../API";
-import { LoginPopup } from "../modals";
 import { UserService } from "../services/user_service";
 
 interface SignupActionProps {
@@ -225,7 +224,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return {
           success: false,
           requiresVerification: false,
-          message: LOGIN_FAILURE_MESSAGE,
+          message: AppConstants.LOGIN_FAILURE_MESSAGE,
         };
       }
     }

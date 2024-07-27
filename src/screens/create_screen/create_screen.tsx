@@ -1,35 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import {
+  Alert,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  CREATE_IMAGE_BACK,
-  CREATE_IMAGE_HEADING,
-  CREATE_IMAGE_HIGHLIGHT,
-  CREATE_IMAGE_SUBHEADING,
-  CREATE_NEXT,
-  CREATE_PREVIEW_BACK,
-  CREATE_PREVIEW_HEADING,
-  CREATE_PREVIEW_HIGHLIGHT,
-  CREATE_PREVIEW_SUBHEADING,
-  CREATE_TEXT_OPTION_BACK,
-  CREATE_TEXT_OPTION_HEADING,
-  CREATE_TEXT_OPTION_HIGHLIGHT,
-  CREATE_TEXT_OPTION_SUBHEADING,
-  CREATE_TITLE_BACK,
-  CREATE_TITLE_HEADING,
-  CREATE_TITLE_HIGHLIGHT,
-  CREATE_TITLE_PLACEHOLDER,
-  CREATE_TITLE_SUBHEADING,
-} from "../../../assets/constants/app_constants";
+import { AppConstants } from "../../../assets/constants/app_constants";
 import { BackIcon } from "../../../assets/svg";
 import { AppButton, AppTextInput } from "../../components";
+import { LoadingOverlay } from "../../components/shared/loading_overlay";
 import { useTheme } from "../../contexts/theme_context";
+import { PollService } from "../../services/poll_service";
 import { AddImage } from "./components/add_image";
 import { AddTextOptions } from "./components/add_text_options";
 import { PreviewPoll } from "./components/preview_poll";
@@ -37,38 +21,82 @@ import { TitleWithHeader } from "./components/title_with_header";
 
 export function CreateScreen() {
   const { colors } = useTheme();
+
+  // ProgressIndex -> 0: title, 1: image, 2: text options, 3: preview
   const [progressIndex, setProgressIndex] = useState(0);
   const [image, setImage] = useState<null | string>(null);
   const [title, setTitle] = useState("");
   const [options, setOptions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   const stageText = [
     {
-      back: CREATE_TITLE_BACK,
-      heading: CREATE_TITLE_HEADING,
-      highlight: CREATE_TITLE_HIGHLIGHT,
-      subheading: CREATE_TITLE_SUBHEADING,
+      back: AppConstants.CREATE_TITLE_BACK,
+      heading: AppConstants.CREATE_TITLE_HEADING,
+      highlight: AppConstants.CREATE_TITLE_HIGHLIGHT,
+      subheading: AppConstants.CREATE_TITLE_SUBHEADING,
     },
     {
-      back: CREATE_IMAGE_BACK,
-      heading: CREATE_IMAGE_HEADING,
-      highlight: CREATE_IMAGE_HIGHLIGHT,
-      subheading: CREATE_IMAGE_SUBHEADING,
+      back: AppConstants.CREATE_IMAGE_BACK,
+      heading: AppConstants.CREATE_IMAGE_HEADING,
+      highlight: AppConstants.CREATE_IMAGE_HIGHLIGHT,
+      subheading: AppConstants.CREATE_IMAGE_SUBHEADING,
     },
     {
-      back: CREATE_TEXT_OPTION_BACK,
-      heading: CREATE_TEXT_OPTION_HEADING,
-      highlight: CREATE_TEXT_OPTION_HIGHLIGHT,
-      subheading: CREATE_TEXT_OPTION_SUBHEADING,
+      back: AppConstants.CREATE_TEXT_OPTION_BACK,
+      heading: AppConstants.CREATE_TEXT_OPTION_HEADING,
+      highlight: AppConstants.CREATE_TEXT_OPTION_HIGHLIGHT,
+      subheading: AppConstants.CREATE_TEXT_OPTION_SUBHEADING,
     },
     {
-      back: CREATE_PREVIEW_BACK,
-      heading: CREATE_PREVIEW_HEADING,
-      highlight: CREATE_PREVIEW_HIGHLIGHT,
-      subheading: CREATE_PREVIEW_SUBHEADING,
+      back: AppConstants.CREATE_PREVIEW_BACK,
+      heading: AppConstants.CREATE_PREVIEW_HEADING,
+      highlight: AppConstants.CREATE_PREVIEW_HIGHLIGHT,
+      subheading: AppConstants.CREATE_PREVIEW_SUBHEADING,
     },
   ];
+
+  const clearStates = () => {
+    setImage(null);
+    setTitle("");
+    setOptions([]);
+    setProgressIndex(0);
+  };
+
+  const uploadPoll = async () => {
+    setLoading(true);
+    var result = await PollService.createStandardPoll(image!, title, options);
+    if (result) {
+      navigation.goBack();
+      clearStates();
+    } else {
+      Alert.alert(
+        AppConstants.CREATE_POLL_INVALID_TITLE,
+        AppConstants.CREATE_POLL_FAILURE_MESSAGE,
+        [{ text: AppConstants.CREATE_POLL_INVALID_DISMISS }],
+        {
+          cancelable: false,
+        }
+      );
+    }
+    setLoading(false);
+  };
+
+  const canProgress = () => {
+    switch (progressIndex) {
+      case 0:
+        return title.length > 0;
+      case 1:
+        return image != null;
+      case 2:
+        return options.length > 1;
+      case 3:
+        return true;
+      default:
+        return false;
+    }
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.contrastLowest }}>
@@ -98,7 +126,7 @@ export function CreateScreen() {
         {progressIndex == 0 ? (
           <View style={styles.titleContainer}>
             <AppTextInput
-              placeholder={CREATE_TITLE_PLACEHOLDER}
+              placeholder={AppConstants.CREATE_TITLE_PLACEHOLDER}
               textStyling={{ textAlign: "center" }}
               valueSetter={setTitle}
               value={title}
@@ -114,14 +142,20 @@ export function CreateScreen() {
         )}
         <View style={{ flex: 1 }} />
         <AppButton
-          backgroundColor={colors.primary}
-          text={CREATE_NEXT}
+          backgroundColor={canProgress() ? colors.primary : colors.primaryFaded}
+          text={AppConstants.CREATE_NEXT}
+          disabled={!canProgress()}
           action={() => {
-            setProgressIndex(progressIndex + 1);
+            if (progressIndex == 3) {
+              uploadPoll();
+            } else {
+              setProgressIndex(progressIndex + 1);
+            }
           }}
           textColor={colors.contrastLowest}
         />
       </View>
+      {loading && <LoadingOverlay />}
     </SafeAreaView>
   );
 }

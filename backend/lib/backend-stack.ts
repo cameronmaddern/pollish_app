@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { createAmplifyGraphQLAPI } from "./api/appsync";
 import { createPollishAuth } from "./auth/cognito";
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { createS3Bucket } from "./s3/bucket";
 
 export class BackendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, env?: string) {
@@ -21,6 +21,10 @@ export class BackendStack extends cdk.Stack {
       unauthRole: pollishAuth.identityPool.unauthenticatedRole,
     });
 
+    const pollishS3 = createS3Bucket(this, {
+      authenticatedRole: pollishAuth.identityPool.authenticatedRole,
+    });
+
     new cdk.CfnOutput(this, "UserPoolId", {
       value: pollishAuth.userPool.userPoolId,
     });
@@ -29,6 +33,10 @@ export class BackendStack extends cdk.Stack {
     });
     new cdk.CfnOutput(this, "IdentityPoolId", {
       value: pollishAuth.identityPool.identityPoolId,
+    });
+
+    new cdk.CfnOutput(this, "S3Bucket", {
+      value: pollishS3.bucketName,
     });
   }
 }
