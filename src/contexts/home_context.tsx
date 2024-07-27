@@ -1,4 +1,4 @@
-import { type ReactNode, createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import type { ImagePollData, TextPollData } from "../components/poll/entities";
 import { PollService } from "../services/poll_service";
 import { useAuth } from "./auth_context";
@@ -62,7 +62,7 @@ export function HomeProvider({ children }: HomeProviderProps) {
 
       return formattedPolls;
     } catch (error) {
-      console.error("error finding polls", error);
+      console.log("error finding polls", error);
       return [];
     }
   };

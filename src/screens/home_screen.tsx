@@ -1,4 +1,5 @@
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -41,10 +42,12 @@ export function HomeScreenInternal() {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      locatePolls();
-    }
+    locatePolls();
   }, [user]);
+
+  useFocusEffect(() => {
+    checkLoggedIn();
+  });
 
   return (
     <View
