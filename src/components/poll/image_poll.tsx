@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import ImageViewing from "react-native-image-viewing";
 import { useAuth } from "../../contexts/auth_context";
 import { useTheme } from "../../contexts/theme_context";
 import { PollService } from "../../services/poll_service";
-import { type ImagePollData, PollOptionState } from "./entities";
+import { PollOptionState, type ImagePollData } from "./entities";
 import { PollImageOption, PollSharedScaffold } from "./subcomponents";
 
 interface PollState {
@@ -25,6 +26,17 @@ export function ImagePoll({ pollData }: { pollData: ImagePollData }) {
     0
   );
   const [userVoteId, setUserVoteId] = useState<string>(pollData.userVoteId);
+
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
+  const [showFullScreenImage, setShowFullScreenImage] = useState(false);
+  const imagesForFullScreen = pollData.options.map((option) => ({
+    uri: option.image,
+  }));
+
+  const fullScreenImageHandler = (index: number) => {
+    setSelectedImageIndex(index);
+    setShowFullScreenImage(true);
+  };
 
   const onVote = async (optionId: string) => {
     try {
@@ -110,6 +122,8 @@ export function ImagePoll({ pollData }: { pollData: ImagePollData }) {
             votes={pollState.votes[option.id] || 0}
             totalVotes={totalVotes}
             onVote={onVote}
+            index={index}
+            fullScreenImageHandler={fullScreenImageHandler}
           />
           {index < pollData.options.length - 1 && (
             <View style={{ height: 8 }} />
@@ -117,6 +131,12 @@ export function ImagePoll({ pollData }: { pollData: ImagePollData }) {
         </View>
       ))}
       <View style={{ height: 16 }} />
+      <ImageViewing
+        images={imagesForFullScreen}
+        imageIndex={selectedImageIndex}
+        visible={showFullScreenImage}
+        onRequestClose={() => setShowFullScreenImage(false)}
+      />
     </PollSharedScaffold>
   );
 }
