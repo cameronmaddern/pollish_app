@@ -30,7 +30,7 @@ export const AddImage = ({ image, setImage }: AddImageProps) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
-      quality: 0.5,
+      quality: 0.8,
     });
 
     if (!result.canceled) {
