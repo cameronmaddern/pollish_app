@@ -5,7 +5,7 @@ export class AppConstants {
   static readonly SEARCH_TAB = "Search";
   static readonly CREATE_TAB = "Create";
   static readonly TAGS_TAB = "Tags";
-  static readonly PROFILE_TAB = "Profile";
+  static readonly PROFILE_TAB = "ProfileStack";
 
   static readonly CHAT = "Chat";
   static readonly CLOSE = "Close";
@@ -81,4 +81,18 @@ export class AppConstants {
   static readonly CREATE_POLL_FAILURE_MESSAGE =
     "We failed to create your poll, please check your connection and try again";
   static readonly CREATE_POLL_INVALID_TITLE = "Poll creation failed";
+
+  static readonly PROFILE_NO_USER = "no_user";
+  static readonly PROFILE_FOLLOWERS = "Followers";
+  static readonly PROFILE_FOLLOWING = "Following";
+  static readonly PROFILE_POLLS = "Polls";
+  static readonly PROFILE_TOPICS = "Topics";
+  static readonly PROFILE_WATCHING = "Watching";
+  static readonly PROFILE_ACTIVITY = "Activity";
+  static readonly PROFILE_PROFILE = "Profile";
+  static readonly PROFILE_NOTIFICATIONS = "Notifications";
+  static readonly PROFILE_HELP = "Help";
+  static readonly PROFILE_LICENSE = "License";
+  static readonly PROFILE_SETTINGS = "Settings";
+  static readonly PROFILE_SCORE = "Score";
 }
