@@ -54,7 +54,11 @@ type Vote
   @model
   @auth(
     rules: [
-      { allow: public, provider: apiKey, operations: [read, create, update, delete] }
+      {
+        allow: public
+        provider: apiKey
+        operations: [read, create, update, delete]
+      }
     ]
   ) {
   id: ID!
@@ -77,4 +81,5 @@ type User
   ) {
   id: ID!
   username: String!
+  profilePic: String
 }

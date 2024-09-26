@@ -7,6 +7,7 @@ import React, {
 
 interface Colors {
   primary: string;
+  primaryMuted: string;
   background: string;
   textMuted: string;
   text: string;
@@ -55,6 +56,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   const lightColors: Colors = {
     primary: "#4BDDB4",
+    primaryMuted: "#81E7CB",
     primaryFaded: "#DBF8F0",
     background: "#F6F6F6",
     textMuted: "#5B5B5B",
@@ -80,6 +82,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   const darkColors: Colors = {
     primary: "#4BDDB4",
+    primaryMuted: "#81E7CC",
     primaryFaded: "#0B392C",
     fadedOnPrimary: "#191919",
     fadedText: "#818181",
@@ -117,6 +120,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     titleLarge: {
       fontFamily: "SFProRounded-Medium",
       fontSize: 20,
+    },
+    titleExtraLarge: {
+      fontFamily: "SFProRounded-Medium",
+      fontSize: 24,
     },
     labelLargeProminent: {
       fontFamily: "SFProRounded-Bold",

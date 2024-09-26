@@ -19,6 +19,7 @@ export function AppTextInput({
   isSecure = false,
 }: AppTextInputProps) {
   const { colors } = useTheme();
+
   return (
     <TextInput
       style={{

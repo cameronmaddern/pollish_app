@@ -1,12 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import {
-  LOGIN_INVALID_POPUP_DISMISS,
-  LOGIN_INVALID_TITLE,
-  LOGIN_VERIFY,
-  LOGIN_VERIFY_PLACEHOLDER,
-} from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import { RootStackProps } from "../../type";
 import { AppButton, AppTextInput } from "../components";
 import { useAuth } from "../contexts/auth_context";
@@ -29,9 +24,9 @@ export function VerifyScreen() {
       navigation.navigate("Main");
     } else {
       Alert.alert(
-        LOGIN_INVALID_TITLE,
+        AppConstants.LOGIN_INVALID_TITLE,
         `${res.message}`,
-        [{ text: LOGIN_INVALID_POPUP_DISMISS }],
+        [{ text: AppConstants.LOGIN_INVALID_POPUP_DISMISS }],
         {
           cancelable: false,
         }
@@ -47,12 +42,13 @@ export function VerifyScreen() {
       }}
     >
       <AppTextInput
-        placeholder={LOGIN_VERIFY_PLACEHOLDER}
+        placeholder={AppConstants.LOGIN_VERIFY_PLACEHOLDER}
         valueSetter={setConfirmationCode}
+        value={confirmationCode}
       />
       <View style={{ height: 24 }} />
       <AppButton
-        text={LOGIN_VERIFY}
+        text={AppConstants.LOGIN_VERIFY}
         action={completeSignUp}
         backgroundColor={colors.primary}
         textColor={colors.contrastLowest}

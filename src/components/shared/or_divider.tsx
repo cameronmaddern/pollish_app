@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { LOGIN_OR } from "../../../assets/constants/app_constants";
+import { AppConstants } from "../../../assets/constants/app_constants";
 import { useTheme } from "../../contexts/theme_context";
 
 export function OrDivider() {
@@ -24,7 +24,7 @@ export function OrDivider() {
             includeFontPadding: false,
           }}
         >
-          {LOGIN_OR}
+          {AppConstants.LOGIN_OR}
         </Text>
         <View style={{ width: 15 }} />
         <View

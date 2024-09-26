@@ -8,16 +8,15 @@ import {
   signUp,
 } from "aws-amplify/auth";
 import {
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
   createContext,
   useContext,
   useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
 } from "react";
-import { LOGIN_FAILURE_MESSAGE } from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import type { User } from "../API";
-import { LoginPopup } from "../modals";
 import { UserService } from "../services/user_service";
 
 interface SignupActionProps {
@@ -33,6 +32,10 @@ interface LoginActionProps {
 
 interface ConfirmSignupActionProps {
   confirmationCode: string;
+}
+
+interface UpdateUserProfilePicProps {
+  profilePicUri: string;
 }
 
 interface ActionResponse {
@@ -54,6 +57,9 @@ interface AuthContextType {
   confirmSignupAction: ({
     confirmationCode,
   }: ConfirmSignupActionProps) => Promise<ActionResponse>;
+  updateUserProfilePic: ({
+    profilePicUri,
+  }: UpdateUserProfilePicProps) => Promise<ActionResponse>;
   loginAction: ({
     username,
     password,
@@ -225,10 +231,37 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return {
           success: false,
           requiresVerification: false,
-          message: LOGIN_FAILURE_MESSAGE,
+          message: AppConstants.LOGIN_FAILURE_MESSAGE,
         };
       }
     }
+  };
+
+  const updateUserProfilePic = async ({
+    profilePicUri,
+  }: UpdateUserProfilePicProps) => {
+    const userDetails = await getCurrentUser();
+    if (userDetails) {
+      try {
+        const updatedUser = await UserService.updateProfilePic(
+          userDetails.userId,
+          profilePicUri
+        );
+        if (updatedUser) {
+          const authUserUpdated = await getAuthenticatedUser();
+          setUser(authUserUpdated);
+        }
+        return { success: true };
+      } catch (error) {
+        console.log(error);
+        return {
+          success: false,
+          message: AppConstants.PROFILE_FAILED_UPDATE_PROFILE_PIC,
+        };
+      }
+    }
+
+    return { success: false };
   };
 
   return (
@@ -242,6 +275,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         logoutAction,
         showLoginPopup,
         closeLoginPopup,
+        updateUserProfilePic,
         setUser,
         user,
       }}

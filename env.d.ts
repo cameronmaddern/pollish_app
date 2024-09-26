@@ -11,4 +11,6 @@ declare module "@env" {
   export const REACT_APP_USER_POOL_ID_DEV: string;
   export const REACT_APP_USER_POOL_WEB_CLIENT_ID: string;
   export const REACT_APP_USER_POOL_WEB_CLIENT_ID_DEV: string;
+  export const REACT_APP_S3_BUCKET: string;
+  export const REACT_APP_S3_BUCKET_DEV: string;
 }
