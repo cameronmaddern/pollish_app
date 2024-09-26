@@ -25,3 +25,13 @@ export type TabsStackParamList = {
 export type TabsStackNavigationPop = NativeStackScreenProps<TabsStackParamList>;
 
 export type TabsStackProps = NativeStackNavigationProp<TabsStackParamList>;
+
+export type ProfileStackParamList = {
+  Base: undefined;
+};
+
+export type ProfileStackNavigationProp =
+  NativeStackScreenProps<ProfileStackParamList>;
+
+export type ProfileStackProps =
+  NativeStackNavigationProp<ProfileStackParamList>;
