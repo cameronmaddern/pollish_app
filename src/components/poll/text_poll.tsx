@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import ImageViewing from "react-native-image-viewing";
 import { useAuth } from "../../contexts/auth_context";
 import { useTheme } from "../../contexts/theme_context";
 import { PollService } from "../../services/poll_service";
@@ -27,6 +28,7 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
     0
   );
   const [userVoteId, setUserVoteId] = useState<string>(pollData.userVoteId);
+  const [showFullScreenImage, setShowFullScreenImage] = useState(false);
 
   const onVote = async (optionId: string) => {
     try {
@@ -95,7 +97,10 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
       }}
     >
       <View style={{ height: 8 }} />
-      <View style={styles.pollImageContainer}>
+      <TouchableOpacity
+        onPress={() => setShowFullScreenImage(true)}
+        style={styles.pollImageContainer}
+      >
         <Image
           style={styles.pollImage}
           source={{
@@ -103,7 +108,7 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
           }}
           resizeMode="cover"
         />
-      </View>
+      </TouchableOpacity>
       <View style={{ height: 24 }} />
       <View style={styles.genericContainer}>
         <Text style={textStyles.titleLarge}>{pollData.title}</Text>
@@ -131,6 +136,12 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
           </View>
         ))}
       </View>
+      <ImageViewing
+        images={[{ uri: pollData.image }]}
+        imageIndex={0}
+        visible={showFullScreenImage}
+        onRequestClose={() => setShowFullScreenImage(false)}
+      />
     </PollSharedScaffold>
   );
 }

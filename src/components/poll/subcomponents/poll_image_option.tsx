@@ -9,21 +9,25 @@ import {
 } from "react-native";
 import { useTheme } from "../../../contexts/theme_context";
 import { formatPercentage } from "../../../utils";
-import { type ImageOptionData, PollOptionState } from "../entities";
+import { PollOptionState, type ImageOptionData } from "../entities";
 
 interface PollImageOptionProps {
   data: ImageOptionData;
   state: PollOptionState;
   votes: number;
+  index: number;
   totalVotes: number;
   onVote: (optionId: string) => void;
+  fullScreenImageHandler: (index: number) => void;
 }
 
 export function PollImageOption({
   data,
   state,
+  index,
   votes,
   totalVotes,
+  fullScreenImageHandler,
   onVote,
 }: PollImageOptionProps) {
   const { textStyles, colors } = useTheme();
@@ -77,6 +81,7 @@ export function PollImageOption({
   return (
     <TouchableOpacity
       onPress={() => onVote(data.id)}
+      onLongPress={() => fullScreenImageHandler(index)}
       style={styles.touchableContainer}
     >
       <View style={styles.contentsContainer}>

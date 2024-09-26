@@ -12,7 +12,7 @@ import {
   HomeIcon,
   ProfileIcon,
   SearchIcon,
-  TagsIcon,
+  TopicsIcon,
 } from "../../assets/svg";
 import type { TabsStackParamList } from "../../type";
 import { useAuth } from "../contexts/auth_context";
@@ -24,13 +24,8 @@ import { MoreModalProvider } from "../contexts/more_modal_context";
 import { useTheme } from "../contexts/theme_context";
 import { MoreBottomSheet } from "../modals";
 import { CreatePollPopup } from "../modals/create_poll_popup";
-import {
-  CreateScreen,
-  HomeScreen,
-  ProfileScreen,
-  SearchScreen,
-  TagsScreen,
-} from "../screens";
+import { CreateScreen, HomeScreen, SearchScreen, TagsScreen } from "../screens";
+import { ProfileStack } from "./profile_stack";
 
 const Tab = createBottomTabNavigator<TabsStackParamList>();
 
@@ -68,9 +63,9 @@ function TabsInternal() {
       case AppConstants.SEARCH_TAB:
         return <SearchIcon color={color} size={size} />;
       case AppConstants.TAGS_TAB:
-        return <TagsIcon color={color} size={size} />;
+        return <TopicsIcon color={color} size={size} strokeWidth={2.5} />;
       case AppConstants.PROFILE_TAB:
-        return <ProfileIcon color={color} size={size} />;
+        return <ProfileIcon color={color} size={size} strokeWidth={2.5} />;
       case AppConstants.CREATE_TAB:
         return (
           <View
@@ -138,7 +133,7 @@ function TabsInternal() {
           })}
         />
         <Tab.Screen name={AppConstants.TAGS_TAB} component={TagsScreen} />
-        <Tab.Screen name={AppConstants.PROFILE_TAB} component={ProfileScreen} />
+        <Tab.Screen name={AppConstants.PROFILE_TAB} component={ProfileStack} />
       </Tab.Navigator>
       <MoreBottomSheet />
     </MoreModalProvider>
