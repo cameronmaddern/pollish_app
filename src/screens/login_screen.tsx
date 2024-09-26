@@ -1,18 +1,7 @@
-import { type RouteProp, useNavigation } from "@react-navigation/native";
+import { useNavigation, type RouteProp } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import {
-  LOGIN_EMAIL_PLACEHOLDER,
-  LOGIN_INVALID_POPUP_DISMISS,
-  LOGIN_INVALID_TITLE,
-  LOGIN_LOGIN,
-  LOGIN_PASSWORD_PLACEHOLDER,
-  LOGIN_PROMPT_LOGIN,
-  LOGIN_PROMPT_SIGNUP,
-  LOGIN_SIGNUP,
-  LOGIN_USERNAME_PLACEHOLDER,
-  LOGIN_WITH_GOOGLE,
-} from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import { GoogleIcon } from "../../assets/svg/google_icon";
 import type { RootStackParamList, RootStackProps } from "../../type";
 import { AppTextInput, OrDivider } from "../components/shared";
@@ -42,9 +31,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
         navigation.navigate("Verify");
       } else {
         Alert.alert(
-          LOGIN_INVALID_TITLE,
+          AppConstants.LOGIN_INVALID_TITLE,
           `${res.message}`,
-          [{ text: LOGIN_INVALID_POPUP_DISMISS }],
+          [{ text: AppConstants.LOGIN_INVALID_POPUP_DISMISS }],
           {
             cancelable: false,
           }
@@ -66,9 +55,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
         }
       } else {
         Alert.alert(
-          LOGIN_INVALID_TITLE,
+          AppConstants.LOGIN_INVALID_TITLE,
           `${res.message}`,
-          [{ text: LOGIN_INVALID_POPUP_DISMISS }],
+          [{ text: AppConstants.LOGIN_INVALID_POPUP_DISMISS }],
           {
             cancelable: false,
           }
@@ -82,7 +71,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
     SIGNUP: (
       <AppButton
         action={callSignUp}
-        text={signInState ? LOGIN_PROMPT_SIGNUP : LOGIN_SIGNUP}
+        text={
+          signInState
+            ? AppConstants.LOGIN_PROMPT_SIGNUP
+            : AppConstants.LOGIN_SIGNUP
+        }
         backgroundColor={signInState ? colors.fadedOnPrimary : colors.primary}
         textColor={signInState ? colors.text : colors.contrastLowest}
       />
@@ -90,14 +83,18 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
     SIGNIN: (
       <AppButton
         action={callSignIn}
-        text={signInState ? LOGIN_LOGIN : LOGIN_PROMPT_LOGIN}
+        text={
+          signInState
+            ? AppConstants.LOGIN_LOGIN
+            : AppConstants.LOGIN_PROMPT_LOGIN
+        }
         backgroundColor={signInState ? colors.primary : colors.fadedOnPrimary}
         textColor={signInState ? colors.contrastLowest : colors.text}
       />
     ),
     WITH_GOOGLE: (
       <AppButton
-        text={LOGIN_WITH_GOOGLE}
+        text={AppConstants.LOGIN_WITH_GOOGLE}
         textColor={colors.contrastLowest}
         action={() => {}}
         backgroundColor={colors.tertiary}
@@ -114,23 +111,26 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
       }}
     >
       <AppTextInput
-        placeholder={LOGIN_USERNAME_PLACEHOLDER}
+        placeholder={AppConstants.LOGIN_USERNAME_PLACEHOLDER}
         valueSetter={setUsername}
+        value={username}
       />
 
       {!signInState && (
         <>
           <View style={{ height: 18 }} />
           <AppTextInput
-            placeholder={LOGIN_EMAIL_PLACEHOLDER}
+            placeholder={AppConstants.LOGIN_EMAIL_PLACEHOLDER}
             valueSetter={setEmail}
+            value={email}
           />
         </>
       )}
       <View style={{ height: 18 }} />
       <AppTextInput
-        placeholder={LOGIN_PASSWORD_PLACEHOLDER}
+        placeholder={AppConstants.LOGIN_PASSWORD_PLACEHOLDER}
         valueSetter={setPassword}
+        value={password}
         isSecure
       />
       <View style={{ height: 24 }} />

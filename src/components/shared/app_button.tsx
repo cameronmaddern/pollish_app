@@ -15,6 +15,7 @@ interface AppButtonProps {
   text: string;
   action: () => void | Promise<void>;
   icon?: React.JSX.Element | null;
+  disabled?: boolean;
 }
 
 export function AppButton({
@@ -24,6 +25,7 @@ export function AppButton({
   textColor,
   text,
   icon,
+  disabled = false,
 }: AppButtonProps) {
   const { textStyles } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +50,7 @@ export function AppButton({
         borderWidth: borderColor != "" ? 1 : 0,
       }}
       onPress={handlePress}
-      disabled={isLoading}
+      disabled={disabled || isLoading}
     >
       {isLoading ? (
         <ActivityIndicator size="small" color={textColor} />

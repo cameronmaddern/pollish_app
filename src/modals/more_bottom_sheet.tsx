@@ -4,16 +4,7 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 import React, { useCallback, useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import {
-  CLOSE,
-  POLL_ACTION,
-  POLL_DELETE,
-  POLL_EXPLORE,
-  POLL_REPORT,
-  POLL_TRACK,
-  POLL_WATCH,
-  POLL_WATCHING,
-} from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import { EyeClosedIcon, EyeOpenIcon } from "../../assets/svg";
 import { AppButton } from "../components/shared/app_button";
 import { useModal } from "../contexts/more_modal_context";
@@ -55,7 +46,9 @@ export const MoreBottomSheet = () => {
           <Text style={textStyles.titleLarge}>{openModalTitle}</Text>
         </View>
         <View style={[styles.childContainer]}>
-          <Text style={textStyles.labelLargeProminent}>{POLL_EXPLORE}</Text>
+          <Text style={textStyles.labelLargeProminent}>
+            {AppConstants.POLL_EXPLORE}
+          </Text>
           <View style={styles.buttonContainer}>
             {openModalTopics &&
               openModalTopics.map((topic: string, idx: number) => (
@@ -71,7 +64,9 @@ export const MoreBottomSheet = () => {
           </View>
         </View>
         <View style={[styles.childContainer]}>
-          <Text style={textStyles.labelLargeProminent}>{POLL_TRACK}</Text>
+          <Text style={textStyles.labelLargeProminent}>
+            {AppConstants.POLL_TRACK}
+          </Text>
           <View style={styles.buttonContainer}>
             <AppButton
               icon={
@@ -83,26 +78,32 @@ export const MoreBottomSheet = () => {
               }
               backgroundColor={isWatching ? colors.primary : colors.background}
               borderColor={isWatching ? "" : colors.primary}
-              text={isWatching ? POLL_WATCHING : POLL_WATCH}
+              text={
+                isWatching
+                  ? AppConstants.POLL_WATCHING
+                  : AppConstants.POLL_WATCH
+              }
               textColor={isWatching ? colors.contrastLowest : colors.primary}
               action={() => setIsWatching(!isWatching)}
             />
           </View>
         </View>
         <View style={[styles.childContainer, styles.actionContainer]}>
-          <Text style={textStyles.labelLargeProminent}>{POLL_ACTION}</Text>
+          <Text style={textStyles.labelLargeProminent}>
+            {AppConstants.POLL_ACTION}
+          </Text>
           <View style={styles.buttonContainer}>
             <AppButton
               backgroundColor={colors.mutedButtonBackground}
               borderColor={colors.mutedButtonStroke}
               textColor={colors.text}
-              text={POLL_REPORT}
+              text={AppConstants.POLL_REPORT}
               action={() => console.log("Poll reported")}
             />
             <AppButton
               backgroundColor={colors.strongButtonBackground}
               textColor={colors.background}
-              text={POLL_DELETE}
+              text={AppConstants.POLL_DELETE}
               action={() => console.log("Poll deleted")}
             />
           </View>
@@ -111,7 +112,7 @@ export const MoreBottomSheet = () => {
           <AppButton
             backgroundColor={colors.background}
             borderColor={colors.mutedButtonStroke}
-            text={CLOSE}
+            text={AppConstants.CLOSE}
             textColor={colors.text}
             action={() => closeModal()}
           />

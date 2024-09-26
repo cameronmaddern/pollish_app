@@ -15,13 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 
 import { useNavigation } from "@react-navigation/native";
-import {
-  CREATE_POLL_POPUP_CONTENT,
-  CREATE_POLL_POPUP_IMAGE,
-  CREATE_POLL_POPUP_STANDARD,
-  CREATE_POLL_POPUP_TEXT,
-  CREATE_POLL_POPUP_TITLE,
-} from "../../assets/constants/app_constants";
+import { AppConstants } from "../../assets/constants/app_constants";
 import { TabsStackProps } from "../../type";
 import { useCreatePollModal } from "../contexts/create_poll_modal_context";
 import { useTheme } from "../contexts/theme_context";
@@ -144,7 +138,9 @@ export function CreatePollPopup() {
       backdropComponent={renderBackdrop}
     >
       <BottomSheetView style={styles.modalContainer}>
-        <Text style={textStyles.titleLarge}>{CREATE_POLL_POPUP_TITLE}</Text>
+        <Text style={textStyles.titleLarge}>
+          {AppConstants.CREATE_POLL_POPUP_TITLE}
+        </Text>
         <View style={{ height: 12 }} />
 
         <Text
@@ -154,7 +150,7 @@ export function CreatePollPopup() {
             textAlign: "center",
           }}
         >
-          {CREATE_POLL_POPUP_CONTENT}
+          {AppConstants.CREATE_POLL_POPUP_CONTENT}
         </Text>
         <View style={{ height: 24 }} />
 
@@ -193,7 +189,7 @@ export function CreatePollPopup() {
                 textAlign: "center",
               }}
             >
-              {CREATE_POLL_POPUP_STANDARD}
+              {AppConstants.CREATE_POLL_POPUP_STANDARD}
             </Text>
           </View>
           <View>
@@ -226,7 +222,7 @@ export function CreatePollPopup() {
                 textAlign: "center",
               }}
             >
-              {CREATE_POLL_POPUP_IMAGE}
+              {AppConstants.CREATE_POLL_POPUP_IMAGE}
             </Text>
           </View>
         </View>
@@ -265,7 +261,7 @@ export function CreatePollPopup() {
               textAlign: "center",
             }}
           >
-            {CREATE_POLL_POPUP_TEXT}
+            {AppConstants.CREATE_POLL_POPUP_TEXT}
           </Text>
         </View>
         <View style={{ height: 24 }} />

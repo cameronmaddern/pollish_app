@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import * as Constants from "../../../../assets/constants/app_constants";
+import { AppConstants } from "../../../../assets/constants/app_constants";
 import { ChatIcon, MoreIcon, TimerIcon } from "../../../../assets/svg";
 import { useModal } from "../../../contexts/more_modal_context";
 import { useTheme } from "../../../contexts/theme_context";
@@ -66,7 +66,7 @@ export const PollSharedScaffold: React.FC<PollSharedScaffoldProps> = ({
           <ChatIcon size={28} color={colors.text} />
           <View style={{ width: 4 }} />
           <Text style={{ ...textStyles.bodyMedium, color: colors.text }}>
-            {Constants.CHAT}
+            {AppConstants.CHAT}
           </Text>
         </View>
       </View>
