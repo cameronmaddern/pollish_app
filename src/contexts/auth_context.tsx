@@ -34,6 +34,10 @@ interface ConfirmSignupActionProps {
   confirmationCode: string;
 }
 
+interface UpdateUserProfilePicProps {
+  profilePicUri: string;
+}
+
 interface ActionResponse {
   success: boolean;
   message?: string;
@@ -53,6 +57,9 @@ interface AuthContextType {
   confirmSignupAction: ({
     confirmationCode,
   }: ConfirmSignupActionProps) => Promise<ActionResponse>;
+  updateUserProfilePic: ({
+    profilePicUri,
+  }: UpdateUserProfilePicProps) => Promise<ActionResponse>;
   loginAction: ({
     username,
     password,
@@ -230,6 +237,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const updateUserProfilePic = async ({
+    profilePicUri,
+  }: UpdateUserProfilePicProps) => {
+    const userDetails = await getCurrentUser();
+    if (userDetails) {
+      try {
+        const updatedUser = await UserService.updateProfilePic(
+          userDetails.userId,
+          profilePicUri
+        );
+        if (updatedUser) {
+          const authUserUpdated = await getAuthenticatedUser();
+          setUser(authUserUpdated);
+        }
+        return { success: true };
+      } catch (error) {
+        console.log(error);
+        return {
+          success: false,
+          message: AppConstants.PROFILE_FAILED_UPDATE_PROFILE_PIC,
+        };
+      }
+    }
+
+    return { success: false };
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -241,6 +275,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         logoutAction,
         showLoginPopup,
         closeLoginPopup,
+        updateUserProfilePic,
         setUser,
         user,
       }}

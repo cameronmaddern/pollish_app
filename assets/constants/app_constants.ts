@@ -95,4 +95,6 @@ export class AppConstants {
   static readonly PROFILE_LICENSE = "License";
   static readonly PROFILE_SETTINGS = "Settings";
   static readonly PROFILE_SCORE = "Score";
+  static readonly PROFILE_FAILED_UPDATE_PROFILE_PIC =
+    "We failed to update your profile image, please check your connection and try again";
 }
