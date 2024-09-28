@@ -1,5 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { ColorValue, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  type ColorValue,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import * as Constants from "../../assets/constants/app_constants";
 import {
   BackIcon,
@@ -9,7 +14,7 @@ import {
   SearchIcon,
   TagsIcon,
 } from "../../assets/svg";
-import { TabsStackParamList } from "../../type";
+import type { TabsStackParamList } from "../../type";
 import { useAuth } from "../contexts/auth_context";
 import {
   CreatePollModalProvider,
@@ -160,7 +165,8 @@ const styles = StyleSheet.create({
   },
   tabBarStyle: {
     position: "absolute",
-    borderRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     borderWidth: 1,
     borderTopWidth: 1,
     paddingLeft: 10,
