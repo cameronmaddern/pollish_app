@@ -69,6 +69,7 @@ export function ProfileScreen() {
   const NavigationButton = ({
     title,
     icon,
+    action,
   }: {
     title: string;
     icon: React.JSX.Element;
@@ -81,6 +82,7 @@ export function ProfileScreen() {
           backgroundColor: colors.background,
           width: itemWidth,
         }}
+        onPress={action}
       >
         {icon}
         <View style={{ height: 9 }} />
@@ -186,7 +188,9 @@ export function ProfileScreen() {
       <View style={styles.navigationButtonRow}>
         <NavigationButton
           // TODO: This is the logout button for now but will be replaced when settings page is implemented
-          action={() => logoutUser()}
+          action={() => {
+            logoutUser();
+          }}
           icon={<TopicsIcon size={28} color={colors.text} strokeWidth={1.5} />}
           title={AppConstants.PROFILE_TOPICS}
         />

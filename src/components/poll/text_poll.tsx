@@ -31,6 +31,7 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
   const [showFullScreenImage, setShowFullScreenImage] = useState(false);
 
   const onVote = async (optionId: string) => {
+    console.log(pollState);
     try {
       if (user === null) {
         openLoginPopup();
@@ -70,9 +71,10 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
             },
             selectedOption: optionId,
           };
+
           if (prevState.selectedOption !== null) {
             newState.votes[prevState.selectedOption] = Math.max(
-              (prevState.votes[optionId] || 0) - 1,
+              (prevState.votes[prevState.selectedOption] || 0) - 1,
               0
             );
           }
