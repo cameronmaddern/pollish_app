@@ -31,7 +31,6 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
   const [showFullScreenImage, setShowFullScreenImage] = useState(false);
 
   const onVote = async (optionId: string) => {
-    console.log(pollState);
     try {
       if (user === null) {
         openLoginPopup();
