@@ -123,6 +123,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
             placeholder={AppConstants.LOGIN_EMAIL_PLACEHOLDER}
             valueSetter={setEmail}
             value={email}
+            maxLength={40}
           />
         </>
       )}

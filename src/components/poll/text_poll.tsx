@@ -70,9 +70,10 @@ export function TextPoll({ pollData }: { pollData: TextPollData }) {
             },
             selectedOption: optionId,
           };
+
           if (prevState.selectedOption !== null) {
             newState.votes[prevState.selectedOption] = Math.max(
-              (prevState.votes[optionId] || 0) - 1,
+              (prevState.votes[prevState.selectedOption] || 0) - 1,
               0
             );
           }
